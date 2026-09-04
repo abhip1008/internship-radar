@@ -1,0 +1,103 @@
+# The single source of truth for resume content.
+# Every bullet you could ever put on a resume, stored once, tagged.
+# The tailoring engine SELECTS and RE-ANGLES these bullets — it never invents new ones.
+
+identity:
+  name: "Abhiram Purohit"
+  email: "purohit.abhiram@gmail.com"
+  phone: ""
+  links:
+    github: "https://github.com/abhip1008"
+    linkedin: ""
+    portfolio: ""
+  education:
+    school: University of Washington Bothell
+    degree: B.S. Computer Science & Software Engineering
+    grad: 2028-06
+    coursework: [Data Structures, Object-Oriented Programming, Calculus 1, Calculus 2]
+
+experiences:
+  - id: mechxcel
+    org: MechXcel Robotics
+    role: Co-Founder
+    location: Bothell, WA
+    start: 2023-07
+    end: present
+    kind: leadership
+    bullets:
+      - id: mechxcel-scale
+        text: "Co-founded a non-profit robotics organization, building the curriculum, competition teams, and operations that serve 120+ students in grades 3-8 around Bothell"
+        tags: [leadership, ops, education, scale]
+        metrics: {students: 120}
+      - id: mechxcel-curriculum
+        text: "Designed and taught a hands-on curriculum in Python programming and engineering fundamentals to students with no prior coding experience"
+        tags: [python, teaching, curriculum]
+      - id: mechxcel-awards
+        text: "Mentored student teams to 13 competition awards through iterative design, debugging, and coaching"
+        tags: [mentorship, debugging, communication]
+        metrics: {awards: 13}
+      - id: mechxcel-fundraising
+        text: "Raised and donated $20,000 through sponsorship outreach and community fundraising campaigns"
+        tags: [ownership, communication, nonprofit]
+        metrics: {raised_usd: 20000}
+      - id: mechxcel-ops
+        text: "Managed volunteer coaches, scheduling, parent communication, and competition logistics across multiple seasons"
+        tags: [ops, leadership]
+
+  - id: startup-club
+    org: Startup Club
+    role: Engineering Leader
+    start: 2025-12
+    end: present
+    kind: leadership
+    bullets:
+      - {id: sc-ownership, text: "Lead engineering work on a student-facing web platform, owning features from design through delivery", tags: [web, ownership, collaboration]}
+      - {id: sc-review,    text: "Write code, review PRs, and guide teammates through implementation questions", tags: [code-review, mentorship, git]}
+      - {id: sc-agile,     text: "Run an Agile workflow with sprint planning, standups, and iterative delivery", tags: [agile, process, delivery]}
+      - {id: sc-arch,      text: "Lead architecture and design discussions, weighing tradeoffs before committing to an approach", tags: [architecture, tradeoffs, design]}
+
+projects:
+  - id: linx
+    name: Linx
+    stack: [Python, Ollama, Nemotron 3, Nemoclaw]
+    award: "4th Place - BeaverHacks NVIDIA Track"
+    kind: ai-systems
+    bullets:
+      - {id: linx-overview, text: "Built a local-first AI system for Alzheimer's care that runs entirely offline on consumer hardware", tags: [ai, agents, healthcare, hackathon]}
+      - {id: linx-pipeline, text: "Designed a Python-based agentic pipeline with a rolling short-term memory buffer to maintain conversational context", tags: [python, llm, memory, architecture]}
+      - {id: linx-rules,    text: "Integrated Nemoclaw as a parallel deterministic rule layer to override the model when safety-critical conditions were detected", tags: [safety, systems-design, determinism]}
+      - {id: linx-contract, text: "Enforced a strict JSON output contract via system-prompt engineering; the system runs fully offline with no network dependency", tags: [prompt-engineering, reliability, offline]}
+
+  - id: everwell
+    name: EverWell
+    stack: [Node.js, Express, OAuth 2.0, WHOOP API]
+    kind: backend
+    bullets:
+      - {id: ew-platform, text: "Built an AI-powered elder-care platform streaming WHOOP wearable data through a Node.js/Express backend", tags: [backend, nodejs, oauth, api-integration]}
+      - {id: ew-anomaly,  text: "Implemented anomaly monitoring that flags abnormal vitals and surfaces them to caregivers in real time", tags: [monitoring, alerting, health]}
+      - {id: ew-agnostic, text: "Designed the wearable integration layer to be device-agnostic behind a clean abstraction so new data sources drop in without rewrites", tags: [abstraction, api-design]}
+
+  - id: thunderbolts
+    name: Seattle Thunderbolts Cricket Academy App
+    stack: [React Native, Expo, TypeScript, Supabase, PostgreSQL, Stripe]
+    kind: fullstack-product
+    bullets:
+      - {id: tb-product, text: "Built a mobile app where members book sessions, pay with Stripe, browse events, and trade gear", tags: [mobile, product, payments, typescript]}
+      - {id: tb-db,      text: "Designed a 6-table PostgreSQL database with row-level security and a booking-concurrency rule that prevents double-booking a lane", tags: [sql, concurrency, data-modeling, security]}
+      - {id: tb-stripe,  text: "Added server-side Stripe price validation via a backend function and an interactive real-time facility map", tags: [payments, security, backend]}
+
+  - id: resource-hub
+    name: UW Bothell Student Resource Hub
+    stack: [React, Open Library API]
+    team: true
+    kind: frontend
+    bullets:
+      - {id: rh-roles,  text: "Built the React frontend with role-based views and Open Library API integration with graceful fallbacks", tags: [react, api-integration, error-handling]}
+      - {id: rh-upload, text: "Built React components for file upload with progress and error handling, negotiating API contracts with backend teammates", tags: [react, collaboration, ux]}
+
+skills:
+  languages: [Python, JavaScript, TypeScript, Java, SQL]
+  frameworks: [React, React Native, Node.js, Express]
+  data: [PostgreSQL, Supabase]
+  ai: [Ollama, Nemotron, prompt engineering, agentic pipelines]
+  tools: [Git, Agile, OOP, Stripe, OAuth 2.0]

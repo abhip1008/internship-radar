@@ -1,0 +1,27 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.egg-info/
+.pytest_cache/
+
+# Data / secrets
+.env
+data/radar.db
+data/radar.db-*
+files/resumes/*.pdf
+files/resumes/*.tex
+logs/
+*.log
+
+# Node / Next.js
+web/node_modules/
+web/.next/
+web/out/
+web/.env.local
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/

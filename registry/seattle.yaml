@@ -1,0 +1,75 @@
+# Tier 0 — Seattle-area company registry (15-min polling target).
+# Every entry is a *candidate*. `radar detect` confirms the real ATS and board
+# token; do not trust the `ats`/`board_token` guesses here until probed.
+#
+# Fields:
+#   name         display name
+#   slug         internal id (also the default board-token guess)
+#   ats          greenhouse|lever|ashby|smartrecruiters|workable|recruitee|workday|custom|manual
+#   board_token  token for the ATS board (greenhouse/lever/ashby/...)
+#   collector    for ats: custom, the dotted module (custom.amazon)
+#   workday      {tenant, wd, site} for workday employers
+#   hq / offices location info
+#   tier         polling tier (0 = highest)
+#   watchlist    instant-alert on any posting from this company
+#   tags         freeform
+
+# ---- Large tech (custom / big-co collectors) ----
+- {name: Amazon, slug: amazon, ats: custom, collector: custom.amazon, tier: 0, watchlist: true, hq: "Seattle, WA", tags: [big-tech]}
+- {name: Microsoft, slug: microsoft, ats: custom, collector: custom.microsoft, tier: 0, watchlist: true, hq: "Redmond, WA", tags: [big-tech]}
+
+# ---- Growth-stage / mid-size Seattle (mostly Greenhouse / Lever / Ashby) ----
+- {name: Remitly, slug: remitly, ats: greenhouse, board_token: remitly, hq: "Seattle, WA", tier: 0, tags: [fintech, growth-stage]}
+- {name: Smartsheet, slug: smartsheet, ats: greenhouse, board_token: smartsheet, hq: "Bellevue, WA", tier: 0, tags: [saas]}
+- {name: Outreach, slug: outreach, ats: greenhouse, board_token: outreach, hq: "Seattle, WA", tier: 0, tags: [saas, sales-tech]}
+- {name: Highspot, slug: highspot, ats: greenhouse, board_token: highspot, hq: "Seattle, WA", tier: 0, tags: [saas]}
+- {name: Icertis, slug: icertis, ats: greenhouse, board_token: icertis, hq: "Bellevue, WA", tier: 0, tags: [saas, contracts]}
+- {name: Accolade, slug: accolade, ats: greenhouse, board_token: accolade, hq: "Seattle, WA", tier: 0, tags: [health]}
+- {name: Avalara, slug: avalara, ats: greenhouse, board_token: avalara, hq: "Seattle, WA", tier: 0, tags: [tax, saas]}
+- {name: PitchBook, slug: pitchbook, ats: greenhouse, board_token: pitchbook, hq: "Seattle, WA", tier: 0, tags: [fintech, data]}
+- {name: Qumulo, slug: qumulo, ats: greenhouse, board_token: qumulo, hq: "Seattle, WA", tier: 0, tags: [storage, infra]}
+- {name: Pulumi, slug: pulumi, ats: ashby, board_token: pulumi, hq: "Seattle, WA", tier: 0, tags: [infra, devtools]}
+- {name: Temporal, slug: temporal, ats: ashby, board_token: temporal, hq: "Seattle, WA", tier: 0, tags: [infra, devtools]}
+- {name: Amperity, slug: amperity, ats: greenhouse, board_token: amperity, hq: "Seattle, WA", tier: 0, tags: [data, cdp]}
+- {name: Statsig, slug: statsig, ats: greenhouse, board_token: statsig, hq: "Bellevue, WA", tier: 0, tags: [experimentation, data]}
+- {name: Common Room, slug: commonroom, ats: greenhouse, board_token: commonroom, hq: "Seattle, WA", tier: 0, tags: [saas]}
+- {name: Read AI, slug: readai, ats: ashby, board_token: readai, hq: "Seattle, WA", tier: 0, tags: [ai]}
+- {name: Truveta, slug: truveta, ats: greenhouse, board_token: truveta, hq: "Seattle, WA", tier: 0, tags: [health, data]}
+- {name: Karat, slug: karat, ats: greenhouse, board_token: karat, hq: "Seattle, WA", tier: 0, tags: [interviewing]}
+- {name: Esper, slug: esper, ats: lever, board_token: esper, hq: "Bellevue, WA", tier: 0, tags: [devops, iot]}
+- {name: WhyLabs, slug: whylabs, ats: greenhouse, board_token: whylabs, hq: "Seattle, WA", tier: 0, tags: [ai, ml-ops]}
+- {name: SeekOut, slug: seekout, ats: greenhouse, board_token: seekout, hq: "Bellevue, WA", tier: 0, tags: [hr-tech]}
+- {name: Textio, slug: textio, ats: greenhouse, board_token: textio, hq: "Seattle, WA", tier: 0, tags: [ai, hr-tech]}
+- {name: Skilljar, slug: skilljar, ats: greenhouse, board_token: skilljar, hq: "Seattle, WA", tier: 0, tags: [edtech, saas]}
+- {name: Trupanion, slug: trupanion, ats: greenhouse, board_token: trupanion, hq: "Seattle, WA", tier: 0, tags: [insurtech]}
+- {name: Porch, slug: porch, ats: greenhouse, board_token: porch, hq: "Seattle, WA", tier: 0, tags: [proptech]}
+- {name: Flyhomes, slug: flyhomes, ats: lever, board_token: flyhomes, hq: "Seattle, WA", tier: 0, tags: [proptech]}
+- {name: Sana Biotechnology, slug: sana, ats: greenhouse, board_token: sanabiotechnology, hq: "Seattle, WA", tier: 0, tags: [biotech]}
+- {name: Adaptive Biotechnologies, slug: adaptive, ats: workday, workday: {tenant: adaptivebiotech, wd: 1, site: External}, hq: "Seattle, WA", tier: 0, tags: [biotech]}
+
+# ---- AI labs / larger startups with Seattle presence ----
+- {name: OpenAI, slug: openai, ats: ashby, board_token: openai, hq: "San Francisco, CA", offices: ["Seattle, WA"], tier: 0, watchlist: true, tags: [ai, frontier]}
+- {name: Anthropic, slug: anthropic, ats: greenhouse, board_token: anthropic, hq: "San Francisco, CA", offices: ["Seattle, WA"], tier: 0, watchlist: true, tags: [ai, frontier]}
+- {name: Snowflake, slug: snowflake, ats: greenhouse, board_token: snowflake, hq: "Bozeman, MT", offices: ["Bellevue, WA"], tier: 0, tags: [data, cloud]}
+- {name: Databricks, slug: databricks, ats: greenhouse, board_token: databricks, hq: "San Francisco, CA", offices: ["Seattle, WA"], tier: 0, tags: [data, ai]}
+- {name: Stripe, slug: stripe, ats: greenhouse, board_token: stripe, hq: "San Francisco, CA", offices: ["Seattle, WA"], tier: 0, tags: [fintech]}
+- {name: Cloudflare, slug: cloudflare, ats: greenhouse, board_token: cloudflare, hq: "San Francisco, CA", offices: ["Seattle, WA"], tier: 0, tags: [infra, security]}
+- {name: Zillow, slug: zillow, ats: workday, workday: {tenant: zillow, wd: 5, site: Zillow_Group_External}, hq: "Seattle, WA", tier: 0, tags: [proptech]}
+
+# ---- Aerospace / hardware (Greenhouse family + Workday) ----
+- {name: Blue Origin, slug: blueorigin, ats: greenhouse, board_token: blueorigin, hq: "Kent, WA", tier: 0, watchlist: true, tags: [aerospace]}
+- {name: Stoke Space, slug: stokespace, ats: greenhouse, board_token: stokespace, hq: "Kent, WA", tier: 0, tags: [aerospace]}
+- {name: Zoox, slug: zoox, ats: greenhouse, board_token: zoox, hq: "Foster City, CA", offices: ["Seattle, WA"], tier: 0, tags: [av, robotics]}
+
+# ---- Large enterprise / retail / health (mostly Workday) ----
+- {name: Boeing, slug: boeing, ats: workday, workday: {tenant: boeing, wd: 1, site: EXTERNAL_CAREERS}, hq: "Arlington, VA", offices: ["Everett, WA", "Renton, WA", "Seattle, WA", "Auburn, WA"], tier: 0, tags: [aerospace, large-employer]}
+- {name: T-Mobile, slug: tmobile, ats: workday, workday: {tenant: tmobile, wd: 1, site: External}, hq: "Bellevue, WA", tier: 0, tags: [telecom, large-employer]}
+- {name: Costco, slug: costco, ats: workday, workday: {tenant: costco, wd: 1, site: careers}, hq: "Issaquah, WA", tier: 0, tags: [retail, large-employer]}
+- {name: Nordstrom, slug: nordstrom, ats: workday, workday: {tenant: nordstrom, wd: 5, site: nordstrom_careers}, hq: "Seattle, WA", tier: 0, tags: [retail]}
+- {name: Starbucks, slug: starbucks, ats: workday, workday: {tenant: starbucks, wd: 1, site: External}, hq: "Seattle, WA", tier: 0, tags: [retail, large-employer]}
+- {name: Alaska Airlines, slug: alaskaair, ats: workday, workday: {tenant: alaskaair, wd: 1, site: External}, hq: "SeaTac, WA", tier: 0, tags: [airline]}
+- {name: PACCAR, slug: paccar, ats: workday, workday: {tenant: paccar, wd: 5, site: PACCAR_Careers}, hq: "Bellevue, WA", tier: 0, tags: [manufacturing]}
+
+# ---- Research institutes / public sector ----
+- {name: Allen Institute, slug: alleninstitute, ats: greenhouse, board_token: alleninstitute, hq: "Seattle, WA", tier: 0, tags: [research, nonprofit]}
+- {name: Fred Hutch, slug: fredhutch, ats: workday, workday: {tenant: fredhutch, wd: 5, site: External}, hq: "Seattle, WA", tier: 0, tags: [research, health]}

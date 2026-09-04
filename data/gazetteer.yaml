@@ -1,0 +1,62 @@
+# Static location gazetteer for geo normalization (no API needed).
+# Matching is substring-based on lowercased, punctuation-stripped location text.
+
+seattle_metro:
+  - seattle
+  - bellevue
+  - redmond
+  - kirkland
+  - bothell
+  - everett
+  - renton
+  - kent
+  - tukwila
+  - issaquah
+  - sammamish
+  - lynnwood
+  - mukilteo
+  - auburn
+  - federal way
+  - tacoma
+  - woodinville
+  - mercer island
+  - shoreline
+  - duvall
+  - monroe
+  - snoqualmie
+  - north bend
+  - puget sound
+  - greater seattle
+
+# Washington-state (but outside the immediate metro) still ranks above "other".
+washington:
+  - wa
+  - washington state
+  - washington, us
+  - spokane
+  - vancouver, wa
+  - olympia
+  - bellingham
+  - richland
+  - pullman
+
+remote_us:
+  - remote (us)
+  - remote - us
+  - remote, us
+  - remote usa
+  - us remote
+  - united states (remote)
+  - remote united states
+
+# Canonical display names for the most common metro cities.
+canonical:
+  seattle: "Seattle, WA"
+  bellevue: "Bellevue, WA"
+  redmond: "Redmond, WA"
+  kirkland: "Kirkland, WA"
+  bothell: "Bothell, WA"
+  everett: "Everett, WA"
+  renton: "Renton, WA"
+  kent: "Kent, WA"
+  tacoma: "Tacoma, WA"

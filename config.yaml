@@ -1,0 +1,50 @@
+# Internship Radar — main configuration.
+# Secrets are NEVER stored here. Use `env:NAME` to read from the environment.
+
+profile:
+  name: "Abhiram Purohit"
+  email: "purohit.abhiram@gmail.com"
+  graduation: 2028-06
+  work_authorization: us-citizen          # drives eligibility flag matching
+  target_terms: [summer-2027, fall-2026, off-cycle, unspecified]
+  home_metro: seattle
+  max_commute_miles: 60
+
+scoring:
+  # Component weights must sum to 100. See radar/score.py.
+  weights:
+    location: 30
+    term: 20
+    stack_overlap: 25
+    level_fit: 15
+    company_tier: 10
+  alert_threshold: 60
+
+polling:
+  tier0_minutes: 15
+  tier1_minutes: 60
+  tier2_minutes: 30
+  tier3_hours: 12
+  tier4_hours: 24
+
+deadlines:
+  # Global fallback for the estimated-close model when a company has no history.
+  global_fallback_days: 21
+  closing_soon_days: 7
+
+notify:
+  discord_webhook: env:DISCORD_WEBHOOK    # optional
+  ntfy_topic: env:NTFY_TOPIC              # optional
+  digest_hour: 7
+
+llm:
+  provider: gemini                        # free tier; set GEMINI_API_KEY to enable
+  model: gemini-2.0-flash
+  max_calls_per_day: 200
+  # When no API key is present the tailoring/notes engines fall back to a
+  # deterministic, no-LLM path so the pipeline still produces useful output.
+
+http:
+  user_agent: "internship-radar/0.1 (+https://github.com/abhip1008/internship-radar; contact purohit.abhiram@gmail.com)"
+  per_host_rps: 3
+  timeout_seconds: 20

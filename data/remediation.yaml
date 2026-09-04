@@ -1,0 +1,72 @@
+# Gap -> concrete remediation action. Keeps the Notes engine's advice consistent
+# instead of letting an LLM drift. Keyed by normalized skill/keyword.
+# Each entry: action (what to do), effort (rough time), impact (why it matters).
+
+aws:
+  action: "Deploy one existing project (EverWell or Thunderbolts) to AWS and add a one-line bullet about it."
+  effort: "1 weekend"
+  impact: "Cloud appears in the majority of Seattle CS internship JDs and your resume has none. Highest-ROI edit available."
+cloud:
+  action: "Get AWS Cloud Practitioner or deploy a service to a managed cloud; add the deployment to a project bullet."
+  effort: "1 weekend"
+  impact: "Nearly every backend JD in Seattle asks for cloud."
+azure:
+  action: "Deploy a project to Azure App Service; note it on the resume. Relevant for Microsoft-adjacent roles."
+  effort: "1 weekend"
+  impact: "Microsoft and its ecosystem screen for Azure familiarity."
+gcp:
+  action: "Deploy a container to Cloud Run; add the deployment to a bullet."
+  effort: "1 weekend"
+  impact: "Google-adjacent and startup roles list GCP."
+docker:
+  action: "Containerize one existing project with a Dockerfile and docker-compose; commit it."
+  effort: "1 evening"
+  impact: "Pairs with the cloud gap; asked for in ~a third of Seattle backend JDs."
+kubernetes:
+  action: "Containerize one project and deploy it to a managed k8s cluster (GKE/EKS free tier)."
+  effort: "1 weekend"
+  impact: "Signals real deployment maturity; common in infra/platform roles."
+testing:
+  action: "Add Pytest/Jest tests to any one repo and gate them in a GitHub Actions workflow."
+  effort: "1 evening"
+  impact: "Unit testing + CI appears in a large share of JDs and you have none on the page."
+ci:
+  action: "Add a GitHub Actions workflow that runs tests and lint on every push."
+  effort: "1 evening"
+  impact: "CI/CD is table-stakes signal for big-company screens."
+"unit testing":
+  action: "Write Pytest/Jest tests for the core logic of one project; show coverage in the README."
+  effort: "1 evening"
+  impact: "Directly closes the most common testing gap."
+go:
+  action: "Rewrite one small service (e.g. the EverWell anomaly monitor) in Go, or build a CLI in it."
+  effort: "1 weekend"
+  impact: "Go is common in Seattle infra shops; a real repo beats a resume line."
+"c++":
+  action: "Build a small systems project in C++ (e.g. a toy allocator or parser)."
+  effort: "1 weekend"
+  impact: "Expected in embedded, gaming (Valve/Bungie), and systems roles."
+rust:
+  action: "Port a small CLI to Rust; publish the crate or repo."
+  effort: "1 weekend"
+  impact: "Increasingly listed by infra and crypto-adjacent Seattle startups."
+java:
+  action: "Build or finish one non-trivial project in Java; Java is listed but nothing on the page demonstrates it."
+  effort: "1 weekend"
+  impact: "Amazon and enterprise shops probe Java in interviews; back the resume claim with a repo."
+"distributed systems":
+  action: "Add a queue-backed worker (Redis + BullMQ or Python RQ) to EverWell for a real async-processing story."
+  effort: "1 weekend"
+  impact: "You have the concurrency instinct (Thunderbolts lane-booking) but nothing distributed on paper."
+"machine learning":
+  action: "Ship one small supervised-learning project end to end (train, evaluate, deploy the inference)."
+  effort: "1 weekend"
+  impact: "ML roles want a model you built, not just LLM orchestration."
+sql:
+  action: "You already have this (Thunderbolts PostgreSQL + RLS) — make sure it leads backend applications."
+  effort: "none"
+  impact: "Strength to foreground, not a gap to close."
+graphql:
+  action: "Add a GraphQL layer to one existing REST API; note it in the README."
+  effort: "1 evening"
+  impact: "Listed by product-focused startups; cheap to demonstrate."
