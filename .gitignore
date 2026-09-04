@@ -20,6 +20,9 @@ web/node_modules/
 web/.next/
 web/out/
 web/.env.local
+web/tsconfig.tsbuildinfo
+web/public/data.json
+web/public/resumes/
 
 # OS / editor
 .DS_Store
