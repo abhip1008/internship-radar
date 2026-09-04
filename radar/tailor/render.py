@@ -18,11 +18,20 @@ from jinja2 import Environment, FileSystemLoader
 from ..config import ROOT, files_path
 from .bank import load_bank
 
+# Custom delimiters so LaTeX's own {, }, #, and % never collide with Jinja.
 _ENV = Environment(
     loader=FileSystemLoader(str(ROOT / "templates")),
     autoescape=False,
     trim_blocks=True,
     lstrip_blocks=True,
+    block_start_string=r"\BLOCK{",
+    block_end_string="}",
+    variable_start_string=r"\VAR{",
+    variable_end_string="}",
+    comment_start_string=r"\#{",
+    comment_end_string="}",
+    line_statement_prefix="%%-",
+    line_comment_prefix="%#",
 )
 
 # Characters LaTeX treats specially.

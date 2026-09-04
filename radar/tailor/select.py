@@ -63,9 +63,9 @@ def select(reqs: dict[str, Any]) -> dict[str, Any]:
 def _order_sources(bank: dict[str, Any], section: str, reqs: dict[str, Any]) -> list[str]:
     items = bank.get(section, [])
     lead = DOMAIN_LEAD.get(reqs["domain"], [])
-    ids = [it.get("id") for it in items]
-    ids.sort(key=lambda i: (lead.index(i) if i in lead else len(lead) + ids.index(i)))
-    return ids
+    ids = [it.get("id") for it in items if it.get("id")]
+    original = {i: pos for pos, i in enumerate(ids)}  # stable pre-sort order
+    return sorted(ids, key=lambda i: (lead.index(i) if i in lead else len(lead) + original[i]))
 
 
 def _pick(scored: list[Bullet], source_ids: list[str], per: int, reqs: dict[str, Any]) -> dict[str, list[Bullet]]:

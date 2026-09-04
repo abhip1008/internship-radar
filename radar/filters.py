@@ -60,19 +60,42 @@ class FilterResult:
             self.eligibility_flags = []
 
 
+from functools import lru_cache
+
+
+@lru_cache(maxsize=None)
+def _compiled(needles: tuple[str, ...]) -> "re.Pattern":
+    """Word-boundary regex for a needle list so `intern` doesn't match `internal`
+    and `it` doesn't match `audit` (§6 — avoid silent false positives/negatives)."""
+    parts = [r"\b" + re.escape(n.strip()) + r"\b" for n in needles]
+    return re.compile("|".join(parts))
+
+
 def _any(text: str, needles: list[str]) -> bool:
-    return any(n in text for n in needles)
+    return bool(_compiled(tuple(needles)).search(text))
 
 
 def is_early_career(title: str) -> bool:
     return _any(title.lower(), TITLE_INCLUDE)
 
 
+# Standalone technical tokens that make a title CS on their own (permissive by
+# design — a false negative is expensive; §6).
+CS_STANDALONE = [
+    "software", "developer", "swe", "sde", "ml", "machine learning", "ai",
+    "data", "research", "systems", "cloud", "security", "devops", "sre",
+    "embedded", "firmware", "ios", "android", "mobile", "qa", "test", "it",
+    "technical", "programmer", "computer",
+]
+
+
 def is_cs(title: str, description: str = "") -> bool:
-    t = title.lower()
+    t = f" {title.lower()} "
     if _any(t, CS_INCLUDE_CORE):
         return True
     if "engineer" in t and _any(t, ENGINEER_QUALIFIERS):
+        return True
+    if _any(t, CS_STANDALONE):
         return True
     # Fall back to description for thinly-titled reqs (e.g. "Technical Intern").
     if "engineer" in t or "technical" in t:

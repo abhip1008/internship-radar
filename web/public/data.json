@@ -1,0 +1,839 @@
+{
+  "postings": [
+    {
+      "id": "af6388af92cc776b7c0e5f57a9928ede8a12c54e",
+      "company": "Truveta",
+      "company_slug": "truveta",
+      "title": "Software Engineering Intern",
+      "apply_url": "https://job-boards.greenhouse.io/truveta/jobs/5659745004",
+      "locations": [
+        "Seattle, WA"
+      ],
+      "is_seattle_metro": true,
+      "is_remote_us": false,
+      "term": "unspecified",
+      "posted_at": "2026-09-02T18:19:21-04:00",
+      "first_seen_at": "2026-09-04T20:47:33.834183+00:00",
+      "closes_at": "2026-09-25",
+      "closes_kind": "estimated",
+      "closes_evidence": "~est: 21d median lifetime",
+      "days_remaining": 21,
+      "is_closed": false,
+      "fit": 87,
+      "fit_breakdown": {
+        "location": {
+          "points": 30,
+          "max": 30,
+          "why": "Seattle metro"
+        },
+        "term": {
+          "points": 10,
+          "max": 20,
+          "why": "unspecified term"
+        },
+        "stack_overlap": {
+          "points": 25,
+          "max": 25,
+          "why": "2/2 JD techs matched",
+          "matched": [
+            "java",
+            "python"
+          ],
+          "missing": []
+        },
+        "level_fit": {
+          "points": 15,
+          "max": 15,
+          "why": "eligible"
+        },
+        "company_tier": {
+          "points": 7,
+          "max": 10,
+          "why": "known-good (Tier 0)"
+        }
+      },
+      "eligibility_flags": [],
+      "status": "new",
+      "resume_pdf": null,
+      "resume_tex": "/Users/abhirampurohit/internship-radar/files/resumes/truveta_software-engineering-intern_20260904.tex",
+      "resume_approved": false,
+      "notes_preview": "No hard skill gaps against this JD \u2014 your stack covers what it lists.",
+      "has_notes": true
+    },
+    {
+      "id": "bd2df2fd7b088e087a1f3f13f847a07ed72b8617",
+      "company": "Stripe",
+      "company_slug": "stripe",
+      "title": "Software Engineer, Intern",
+      "apply_url": "https://stripe.com/jobs/search?gh_jid=8130867",
+      "locations": [
+        "Barcelona",
+        "Bengaluru",
+        "Bucharest",
+        "Dublin",
+        "London",
+        "Seattle, WA",
+        "Singapore",
+        "Toronto"
+      ],
+      "is_seattle_metro": true,
+      "is_remote_us": false,
+      "term": "unspecified",
+      "posted_at": "2026-09-04T14:12:15-04:00",
+      "first_seen_at": "2026-09-04T20:47:34.128492+00:00",
+      "closes_at": "2026-09-25",
+      "closes_kind": "estimated",
+      "closes_evidence": "~est: 21d median lifetime",
+      "days_remaining": 21,
+      "is_closed": false,
+      "fit": 56,
+      "fit_breakdown": {
+        "location": {
+          "points": 5,
+          "max": 30,
+          "why": "elsewhere"
+        },
+        "term": {
+          "points": 10,
+          "max": 20,
+          "why": "unspecified term"
+        },
+        "stack_overlap": {
+          "points": 19,
+          "max": 25,
+          "why": "3/4 JD techs matched",
+          "matched": [
+            "java",
+            "javascript",
+            "stripe"
+          ],
+          "missing": [
+            "go"
+          ]
+        },
+        "level_fit": {
+          "points": 15,
+          "max": 15,
+          "why": "eligible"
+        },
+        "company_tier": {
+          "points": 7,
+          "max": 10,
+          "why": "known-good (Tier 0)"
+        }
+      },
+      "eligibility_flags": [],
+      "status": "new",
+      "resume_pdf": null,
+      "resume_tex": null,
+      "resume_approved": false,
+      "notes_preview": "Missing: go. You do have java, javascript, stripe on the page.",
+      "has_notes": true
+    },
+    {
+      "id": "4e5d78419759cf326c58d08f06881800460c92c9",
+      "company": "Truveta",
+      "company_slug": "truveta",
+      "title": "ML PhD Intern - LLMs & Generative AI",
+      "apply_url": "https://job-boards.greenhouse.io/truveta/jobs/5712997004",
+      "locations": [
+        "Seattle, WA"
+      ],
+      "is_seattle_metro": true,
+      "is_remote_us": false,
+      "term": "unspecified",
+      "posted_at": "2026-06-29T16:01:19-04:00",
+      "first_seen_at": "2026-09-04T20:47:33.820271+00:00",
+      "closes_at": "2026-09-25",
+      "closes_kind": "estimated",
+      "closes_evidence": "~est: 21d median lifetime",
+      "days_remaining": 21,
+      "is_closed": false,
+      "fit": 55,
+      "fit_breakdown": {
+        "location": {
+          "points": 30,
+          "max": 30,
+          "why": "Seattle metro"
+        },
+        "term": {
+          "points": 10,
+          "max": 20,
+          "why": "unspecified term"
+        },
+        "stack_overlap": {
+          "points": 8,
+          "max": 25,
+          "why": "1/3 JD techs matched",
+          "matched": [
+            "python"
+          ],
+          "missing": [
+            "pytorch",
+            "tensorflow"
+          ]
+        },
+        "level_fit": {
+          "points": 0,
+          "max": 15,
+          "why": "PhD/Master's required"
+        },
+        "company_tier": {
+          "points": 7,
+          "max": 10,
+          "why": "known-good (Tier 0)"
+        }
+      },
+      "eligibility_flags": [
+        "PhD required"
+      ],
+      "status": "new",
+      "resume_pdf": null,
+      "resume_tex": null,
+      "resume_approved": false,
+      "notes_preview": "Missing: pytorch, tensorflow. You do have python on the page.",
+      "has_notes": true
+    },
+    {
+      "id": "c690f17883812fcc832561b45123ed4daa11cf48",
+      "company": "Cloudflare",
+      "company_slug": "cloudflare",
+      "title": "Software Engineer Intern (Fall 2026) - Austin, TX",
+      "apply_url": "https://boards.greenhouse.io/cloudflare/jobs/8052785?gh_jid=8052785",
+      "locations": [
+        "In-Office"
+      ],
+      "is_seattle_metro": false,
+      "is_remote_us": false,
+      "term": "fall-2026",
+      "posted_at": "2026-09-04T10:59:17-04:00",
+      "first_seen_at": "2026-09-04T20:47:34.199835+00:00",
+      "closes_at": null,
+      "closes_kind": "rolling",
+      "closes_evidence": "Rolling \u2014 apply now",
+      "days_remaining": null,
+      "is_closed": false,
+      "fit": 77,
+      "fit_breakdown": {
+        "location": {
+          "points": 20,
+          "max": 30,
+          "why": "Washington"
+        },
+        "term": {
+          "points": 20,
+          "max": 20,
+          "why": "target term (fall-2026)"
+        },
+        "stack_overlap": {
+          "points": 15,
+          "max": 25,
+          "why": "3/5 JD techs matched",
+          "matched": [
+            "javascript",
+            "python",
+            "typescript"
+          ],
+          "missing": [
+            "go",
+            "rust"
+          ]
+        },
+        "level_fit": {
+          "points": 15,
+          "max": 15,
+          "why": "eligible"
+        },
+        "company_tier": {
+          "points": 7,
+          "max": 10,
+          "why": "known-good (Tier 0)"
+        }
+      },
+      "eligibility_flags": [
+        "No visa sponsorship"
+      ],
+      "status": "new",
+      "resume_pdf": null,
+      "resume_tex": null,
+      "resume_approved": false,
+      "notes_preview": "Missing: go, rust. You do have javascript, python, typescript on the page.",
+      "has_notes": true
+    },
+    {
+      "id": "d926533fc0ff4db91a06b3e117a78812a914fefd",
+      "company": "Cloudflare",
+      "company_slug": "cloudflare",
+      "title": "Software Engineer Intern (Fall 2026)",
+      "apply_url": "https://boards.greenhouse.io/cloudflare/jobs/8118855?gh_jid=8118855",
+      "locations": [
+        "In-Office"
+      ],
+      "is_seattle_metro": false,
+      "is_remote_us": false,
+      "term": "fall-2026",
+      "posted_at": "2026-09-04T10:59:17-04:00",
+      "first_seen_at": "2026-09-04T20:47:34.196108+00:00",
+      "closes_at": null,
+      "closes_kind": "rolling",
+      "closes_evidence": "Rolling \u2014 apply now",
+      "days_remaining": null,
+      "is_closed": false,
+      "fit": 77,
+      "fit_breakdown": {
+        "location": {
+          "points": 20,
+          "max": 30,
+          "why": "Washington"
+        },
+        "term": {
+          "points": 20,
+          "max": 20,
+          "why": "target term (fall-2026)"
+        },
+        "stack_overlap": {
+          "points": 15,
+          "max": 25,
+          "why": "3/5 JD techs matched",
+          "matched": [
+            "javascript",
+            "python",
+            "typescript"
+          ],
+          "missing": [
+            "go",
+            "rust"
+          ]
+        },
+        "level_fit": {
+          "points": 15,
+          "max": 15,
+          "why": "eligible"
+        },
+        "company_tier": {
+          "points": 7,
+          "max": 10,
+          "why": "known-good (Tier 0)"
+        }
+      },
+      "eligibility_flags": [
+        "No visa sponsorship"
+      ],
+      "status": "new",
+      "resume_pdf": null,
+      "resume_tex": null,
+      "resume_approved": false,
+      "notes_preview": "Missing: go, rust. You do have javascript, python, typescript on the page.",
+      "has_notes": true
+    },
+    {
+      "id": "1487a93b44d89058eea589f106db66267a75b376",
+      "company": "OpenAI",
+      "company_slug": "openai",
+      "title": "Data Center Compute, OpenHouse Savannah 2026",
+      "apply_url": "https://jobs.ashbyhq.com/openai/6ba0ce24-ad32-4c3b-b49c-b373be9a8480",
+      "locations": [
+        "Remote (US)"
+      ],
+      "is_seattle_metro": false,
+      "is_remote_us": true,
+      "term": "unspecified",
+      "posted_at": "2026-07-22T18:28:26.691000+00:00",
+      "first_seen_at": "2026-09-04T20:47:33.897001+00:00",
+      "closes_at": "2026-09-25",
+      "closes_kind": "estimated",
+      "closes_evidence": "~est: 21d median lifetime",
+      "days_remaining": 21,
+      "is_closed": false,
+      "fit": 69,
+      "fit_breakdown": {
+        "location": {
+          "points": 22,
+          "max": 30,
+          "why": "Remote (US)"
+        },
+        "term": {
+          "points": 10,
+          "max": 20,
+          "why": "unspecified term"
+        },
+        "stack_overlap": {
+          "points": 12,
+          "max": 25,
+          "why": "no explicit stack in JD",
+          "matched": [],
+          "missing": []
+        },
+        "level_fit": {
+          "points": 15,
+          "max": 15,
+          "why": "eligible"
+        },
+        "company_tier": {
+          "points": 10,
+          "max": 10,
+          "why": "watchlist"
+        }
+      },
+      "eligibility_flags": [],
+      "status": "new",
+      "resume_pdf": null,
+      "resume_tex": null,
+      "resume_approved": false,
+      "notes_preview": "No hard skill gaps against this JD \u2014 your stack covers what it lists.",
+      "has_notes": true
+    },
+    {
+      "id": "d7c74cd6ad1f95614c509e46b1592f207a5ebcb0",
+      "company": "Boeing",
+      "company_slug": "boeing",
+      "title": "Boeing Summer 2027 Internship Program (Paid) \u2013 Security & Fire Operation (S&FO)",
+      "apply_url": "https://boeing.wd1.myworkdayjobs.com/EXTERNAL_CAREERS/job/USA---Everett-WA/Boeing-Summer-2027-Internship-Program--Paid----Security---Fire-Operation--S-FO-_JR2026521717-1",
+      "locations": [
+        "30 Locations"
+      ],
+      "is_seattle_metro": false,
+      "is_remote_us": false,
+      "term": "summer-2027",
+      "posted_at": null,
+      "first_seen_at": "2026-09-04T20:47:34.209567+00:00",
+      "closes_at": "2026-09-25",
+      "closes_kind": "estimated",
+      "closes_evidence": "~est: 21d median lifetime",
+      "days_remaining": 21,
+      "is_closed": false,
+      "fit": 59,
+      "fit_breakdown": {
+        "location": {
+          "points": 5,
+          "max": 30,
+          "why": "elsewhere"
+        },
+        "term": {
+          "points": 20,
+          "max": 20,
+          "why": "target term (summer-2027)"
+        },
+        "stack_overlap": {
+          "points": 12,
+          "max": 25,
+          "why": "no explicit stack in JD",
+          "matched": [],
+          "missing": []
+        },
+        "level_fit": {
+          "points": 15,
+          "max": 15,
+          "why": "eligible"
+        },
+        "company_tier": {
+          "points": 7,
+          "max": 10,
+          "why": "known-good (Tier 0)"
+        }
+      },
+      "eligibility_flags": [],
+      "status": "new",
+      "resume_pdf": null,
+      "resume_tex": null,
+      "resume_approved": false,
+      "notes_preview": "No hard skill gaps against this JD \u2014 your stack covers what it lists.",
+      "has_notes": true
+    },
+    {
+      "id": "e84c57d151a655609478f7a8cf2469bbe40684e9",
+      "company": "Boeing",
+      "company_slug": "boeing",
+      "title": "Boeing Summer 2027 Internship Program (Paid) \u2013 Information Digital Technology & Security (IDT&S)",
+      "apply_url": "https://boeing.wd1.myworkdayjobs.com/EXTERNAL_CAREERS/job/USA---Everett-WA/Boeing-Summer-2027-Internship-Program--Paid----Information-Digital-Technology---Security--IDT-S-_JR2026520791-1",
+      "locations": [
+        "17 Locations"
+      ],
+      "is_seattle_metro": false,
+      "is_remote_us": false,
+      "term": "summer-2027",
+      "posted_at": null,
+      "first_seen_at": "2026-09-04T20:47:34.209523+00:00",
+      "closes_at": "2026-09-25",
+      "closes_kind": "estimated",
+      "closes_evidence": "~est: 21d median lifetime",
+      "days_remaining": 21,
+      "is_closed": false,
+      "fit": 59,
+      "fit_breakdown": {
+        "location": {
+          "points": 5,
+          "max": 30,
+          "why": "elsewhere"
+        },
+        "term": {
+          "points": 20,
+          "max": 20,
+          "why": "target term (summer-2027)"
+        },
+        "stack_overlap": {
+          "points": 12,
+          "max": 25,
+          "why": "no explicit stack in JD",
+          "matched": [],
+          "missing": []
+        },
+        "level_fit": {
+          "points": 15,
+          "max": 15,
+          "why": "eligible"
+        },
+        "company_tier": {
+          "points": 7,
+          "max": 10,
+          "why": "known-good (Tier 0)"
+        }
+      },
+      "eligibility_flags": [],
+      "status": "new",
+      "resume_pdf": null,
+      "resume_tex": null,
+      "resume_approved": false,
+      "notes_preview": "No hard skill gaps against this JD \u2014 your stack covers what it lists.",
+      "has_notes": true
+    },
+    {
+      "id": "2b55f78a87973ec724a9191d4bd289ebd40f28f5",
+      "company": "Boeing",
+      "company_slug": "boeing",
+      "title": "Boeing Summer 2027 Internship Program (Paid) \u2013 Data Analytics Intern",
+      "apply_url": "https://boeing.wd1.myworkdayjobs.com/EXTERNAL_CAREERS/job/USA---Everett-WA/Boeing-Summer-2027-Internship-Program--Paid----Data-Analytics-Intern_JR2026520976-1",
+      "locations": [
+        "30 Locations"
+      ],
+      "is_seattle_metro": false,
+      "is_remote_us": false,
+      "term": "summer-2027",
+      "posted_at": null,
+      "first_seen_at": "2026-09-04T20:47:34.209465+00:00",
+      "closes_at": "2026-09-25",
+      "closes_kind": "estimated",
+      "closes_evidence": "~est: 21d median lifetime",
+      "days_remaining": 21,
+      "is_closed": false,
+      "fit": 59,
+      "fit_breakdown": {
+        "location": {
+          "points": 5,
+          "max": 30,
+          "why": "elsewhere"
+        },
+        "term": {
+          "points": 20,
+          "max": 20,
+          "why": "target term (summer-2027)"
+        },
+        "stack_overlap": {
+          "points": 12,
+          "max": 25,
+          "why": "no explicit stack in JD",
+          "matched": [],
+          "missing": []
+        },
+        "level_fit": {
+          "points": 15,
+          "max": 15,
+          "why": "eligible"
+        },
+        "company_tier": {
+          "points": 7,
+          "max": 10,
+          "why": "known-good (Tier 0)"
+        }
+      },
+      "eligibility_flags": [],
+      "status": "new",
+      "resume_pdf": null,
+      "resume_tex": null,
+      "resume_approved": false,
+      "notes_preview": "No hard skill gaps against this JD \u2014 your stack covers what it lists.",
+      "has_notes": true
+    },
+    {
+      "id": "391ce928f2ba1e12c21e3af964fbc5ed724efcc1",
+      "company": "Cloudflare",
+      "company_slug": "cloudflare",
+      "title": "Systems Engineer - Global Resource Management (Data Residency)",
+      "apply_url": "https://boards.greenhouse.io/cloudflare/jobs/8015230?gh_jid=8015230",
+      "locations": [
+        "Hybrid"
+      ],
+      "is_seattle_metro": false,
+      "is_remote_us": false,
+      "term": "unspecified",
+      "posted_at": "2026-09-04T10:59:17-04:00",
+      "first_seen_at": "2026-09-04T20:47:34.204024+00:00",
+      "closes_at": "2026-09-25",
+      "closes_kind": "estimated",
+      "closes_evidence": "~est: 21d median lifetime",
+      "days_remaining": 21,
+      "is_closed": false,
+      "fit": 58,
+      "fit_breakdown": {
+        "location": {
+          "points": 20,
+          "max": 30,
+          "why": "Washington"
+        },
+        "term": {
+          "points": 10,
+          "max": 20,
+          "why": "unspecified term"
+        },
+        "stack_overlap": {
+          "points": 6,
+          "max": 25,
+          "why": "1/4 JD techs matched",
+          "matched": [
+            "postgresql"
+          ],
+          "missing": [
+            "go",
+            "kafka",
+            "kubernetes"
+          ]
+        },
+        "level_fit": {
+          "points": 15,
+          "max": 15,
+          "why": "eligible"
+        },
+        "company_tier": {
+          "points": 7,
+          "max": 10,
+          "why": "known-good (Tier 0)"
+        }
+      },
+      "eligibility_flags": [
+        "No visa sponsorship"
+      ],
+      "status": "new",
+      "resume_pdf": null,
+      "resume_tex": null,
+      "resume_approved": false,
+      "notes_preview": "Missing: go, kafka, kubernetes. You do have postgresql on the page.",
+      "has_notes": true
+    },
+    {
+      "id": "14121c7acb4e96e9ba76597230946034bcb36f70",
+      "company": "Boeing",
+      "company_slug": "boeing",
+      "title": "Intern - Systems Safety Engineering",
+      "apply_url": "https://boeing.wd1.myworkdayjobs.com/EXTERNAL_CAREERS/job/ESP---Madrid-Spain/Intern---Systems-Safety-Engineering_JR2026522575-1",
+      "locations": [
+        "ESP - Madrid, Spain"
+      ],
+      "is_seattle_metro": false,
+      "is_remote_us": false,
+      "term": "unspecified",
+      "posted_at": null,
+      "first_seen_at": "2026-09-04T20:47:34.209413+00:00",
+      "closes_at": "2026-09-25",
+      "closes_kind": "estimated",
+      "closes_evidence": "~est: 21d median lifetime",
+      "days_remaining": 21,
+      "is_closed": false,
+      "fit": 49,
+      "fit_breakdown": {
+        "location": {
+          "points": 5,
+          "max": 30,
+          "why": "elsewhere"
+        },
+        "term": {
+          "points": 10,
+          "max": 20,
+          "why": "unspecified term"
+        },
+        "stack_overlap": {
+          "points": 12,
+          "max": 25,
+          "why": "no explicit stack in JD",
+          "matched": [],
+          "missing": []
+        },
+        "level_fit": {
+          "points": 15,
+          "max": 15,
+          "why": "eligible"
+        },
+        "company_tier": {
+          "points": 7,
+          "max": 10,
+          "why": "known-good (Tier 0)"
+        }
+      },
+      "eligibility_flags": [],
+      "status": "new",
+      "resume_pdf": null,
+      "resume_tex": null,
+      "resume_approved": false,
+      "notes_preview": "No hard skill gaps against this JD \u2014 your stack covers what it lists.",
+      "has_notes": true
+    },
+    {
+      "id": "8761c5cd6e060e8ae9648b32d028c7dfc3eb2ad6",
+      "company": "Boeing",
+      "company_slug": "boeing",
+      "title": "Intern - Software Engineering",
+      "apply_url": "https://boeing.wd1.myworkdayjobs.com/EXTERNAL_CAREERS/job/ESP---Madrid-Spain/Intern---Software-Engineering_JR2026522576-1",
+      "locations": [
+        "ESP - Madrid, Spain"
+      ],
+      "is_seattle_metro": false,
+      "is_remote_us": false,
+      "term": "unspecified",
+      "posted_at": null,
+      "first_seen_at": "2026-09-04T20:47:34.209378+00:00",
+      "closes_at": "2026-09-25",
+      "closes_kind": "estimated",
+      "closes_evidence": "~est: 21d median lifetime",
+      "days_remaining": 21,
+      "is_closed": false,
+      "fit": 49,
+      "fit_breakdown": {
+        "location": {
+          "points": 5,
+          "max": 30,
+          "why": "elsewhere"
+        },
+        "term": {
+          "points": 10,
+          "max": 20,
+          "why": "unspecified term"
+        },
+        "stack_overlap": {
+          "points": 12,
+          "max": 25,
+          "why": "no explicit stack in JD",
+          "matched": [],
+          "missing": []
+        },
+        "level_fit": {
+          "points": 15,
+          "max": 15,
+          "why": "eligible"
+        },
+        "company_tier": {
+          "points": 7,
+          "max": 10,
+          "why": "known-good (Tier 0)"
+        }
+      },
+      "eligibility_flags": [],
+      "status": "new",
+      "resume_pdf": null,
+      "resume_tex": null,
+      "resume_approved": false,
+      "notes_preview": "No hard skill gaps against this JD \u2014 your stack covers what it lists.",
+      "has_notes": true
+    },
+    {
+      "id": "ee77833dac6574e2e63b94633de98a2b852815a4",
+      "company": "Databricks",
+      "company_slug": "databricks",
+      "title": "PhD GenAI Research Scientist Intern",
+      "apply_url": "https://databricks.com/company/careers/open-positions/job?gh_jid=7011263002",
+      "locations": [
+        "San Francisco, California"
+      ],
+      "is_seattle_metro": false,
+      "is_remote_us": false,
+      "term": "unspecified",
+      "posted_at": "2026-08-18T13:17:06-04:00",
+      "first_seen_at": "2026-09-04T20:47:34.024184+00:00",
+      "closes_at": "2026-09-25",
+      "closes_kind": "estimated",
+      "closes_evidence": "~est: 21d median lifetime",
+      "days_remaining": 21,
+      "is_closed": false,
+      "fit": 37,
+      "fit_breakdown": {
+        "location": {
+          "points": 5,
+          "max": 30,
+          "why": "elsewhere"
+        },
+        "term": {
+          "points": 10,
+          "max": 20,
+          "why": "unspecified term"
+        },
+        "stack_overlap": {
+          "points": 0,
+          "max": 25,
+          "why": "0/1 JD techs matched",
+          "matched": [],
+          "missing": [
+            "pytorch"
+          ]
+        },
+        "level_fit": {
+          "points": 15,
+          "max": 15,
+          "why": "eligible"
+        },
+        "company_tier": {
+          "points": 7,
+          "max": 10,
+          "why": "known-good (Tier 0)"
+        }
+      },
+      "eligibility_flags": [],
+      "status": "new",
+      "resume_pdf": null,
+      "resume_tex": null,
+      "resume_approved": false,
+      "notes_preview": "Missing: pytorch.",
+      "has_notes": true
+    }
+  ],
+  "stats": {
+    "open": 13,
+    "seattle": 3,
+    "new_today": 13,
+    "gaps_top": [
+      {
+        "keyword": "go",
+        "seen_count": 4,
+        "covered": 0,
+        "last_seen": "2026-09-04T20:55:14.368345+00:00"
+      },
+      {
+        "keyword": "pytorch",
+        "seen_count": 2,
+        "covered": 0,
+        "last_seen": "2026-09-04T20:55:14.369567+00:00"
+      },
+      {
+        "keyword": "rust",
+        "seen_count": 2,
+        "covered": 0,
+        "last_seen": "2026-09-04T20:55:14.364853+00:00"
+      },
+      {
+        "keyword": "tensorflow",
+        "seen_count": 1,
+        "covered": 0,
+        "last_seen": "2026-09-04T20:55:14.361445+00:00"
+      },
+      {
+        "keyword": "kafka",
+        "seen_count": 1,
+        "covered": 0,
+        "last_seen": "2026-09-04T20:55:14.368380+00:00"
+      },
+      {
+        "keyword": "kubernetes",
+        "seen_count": 1,
+        "covered": 0,
+        "last_seen": "2026-09-04T20:55:14.368435+00:00"
+      }
+    ]
+  }
+}
