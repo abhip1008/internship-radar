@@ -43,7 +43,7 @@ ELIGIBILITY_FLAGS = {
     "PhD required": r"ph\.?d\.?\s*(required|preferred|candidate)",
     "Master's required": r"master'?s?\s*(degree\s*)?(required|preferred)",
     "Graduating by": r"must be graduating by|graduat\w* (in|by)\s*20\d\d",
-    "US citizenship required": r"u\.?s\.?\s*citizen(ship)?\s*(required|only)",
+    "US citizenship required": r"u\.?s\.?\s*citizenship\s*(is\s*)?(required|only)|(must be|require[sd]?)[^.]{0,20}u\.?s\.?\s*citizen",
     "Security clearance": r"(active\s*)?security clearance|ts/sci|secret clearance",
     "No visa sponsorship": r"no\s*(visa\s*)?sponsorship|not able to sponsor|without sponsorship",
 }

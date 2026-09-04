@@ -18,9 +18,19 @@ STOPWORDS = {
 
 
 def _proper_nouns(text: str) -> set[str]:
-    # Capitalized tokens not at sentence start heuristics; keep it simple and strict.
-    tokens = re.findall(r"\b[A-Z][A-Za-z0-9.+#/-]{1,}\b", text)
-    return {t for t in tokens if t not in STOPWORDS}
+    """Capitalized tokens that look like names/techs — skipping sentence-initial
+    words (a leading verb like "Drove" is not a proper noun)."""
+    out: set[str] = set()
+    for m in re.finditer(r"[A-Z][A-Za-z0-9.+#/-]{1,}", text):
+        token = m.group(0)
+        if token in STOPWORDS:
+            continue
+        # Skip if this is the first word or directly follows sentence punctuation.
+        prefix = text[: m.start()].rstrip()
+        if not prefix or prefix[-1] in ".!?;:":
+            continue
+        out.add(token)
+    return out
 
 
 def _numbers(text: str) -> set[str]:

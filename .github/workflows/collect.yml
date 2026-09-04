@@ -1,0 +1,49 @@
+# Scheduled collection (spec §14 — GitHub Actions on a schedule, free for public
+# repos, commits the exported snapshot). Runs the Tier-0 sweep, then exports
+# web/public/data.json and commits it so the Vercel-hosted UI stays fresh.
+#
+# Set repo secrets DISCORD_WEBHOOK / NTFY_TOPIC / GEMINI_API_KEY to enable alerts
+# and LLM tailoring. Without them the sweep still runs and updates the snapshot.
+name: Collect
+
+on:
+  schedule:
+    - cron: "*/15 * * * *" # every 15 minutes (Tier 0 cadence)
+  workflow_dispatch:
+
+concurrency:
+  group: collect
+  cancel-in-progress: false
+
+jobs:
+  sweep:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install -r requirements.txt
+      - name: Restore DB from cache
+        uses: actions/cache@v4
+        with:
+          path: data/radar.db
+          key: radar-db-${{ github.run_id }}
+          restore-keys: radar-db-
+      - name: Sweep + export
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+          NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: |
+          python -m radar.run sweep --tier 0 --lists
+          python -m radar.run export web/public/data.json
+      - name: Commit snapshot
+        run: |
+          git config user.name "radar-bot"
+          git config user.email "radar-bot@users.noreply.github.com"
+          git add -f web/public/data.json
+          git commit -m "chore: refresh snapshot [skip ci]" || echo "no changes"
+          git push || echo "nothing to push"
