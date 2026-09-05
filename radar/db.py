@@ -231,6 +231,27 @@ class DB:
         ).fetchall()
         return {r["id"] for r in rows}
 
+    _UPDATABLE = {
+        "description", "term", "fit_score", "closes_at", "closes_kind", "closes_evidence",
+    }
+    _UPDATABLE_JSON = {"eligibility_flags", "fit_breakdown", "locations"}
+
+    def update_posting_fields(self, pid: str, fields: dict[str, Any]) -> None:
+        """Update a whitelist of posting columns (used by enrichment)."""
+        sets, vals = [], []
+        for key, value in fields.items():
+            if key in self._UPDATABLE:
+                sets.append(f"{key}=?")
+                vals.append(value)
+            elif key in self._UPDATABLE_JSON:
+                sets.append(f"{key}=?")
+                vals.append(_dumps(value))
+        if not sets:
+            return
+        vals.append(pid)
+        self.conn.execute(f"UPDATE postings SET {', '.join(sets)} WHERE id=?", vals)
+        self.conn.commit()
+
     def mark_closed(self, pid: str) -> None:
         self.conn.execute("UPDATE postings SET is_closed=1 WHERE id=?", (pid,))
         self.conn.commit()

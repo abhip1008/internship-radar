@@ -31,6 +31,11 @@ aggregators that scrape them.
   single experience bank — never invented — rendered to `.tex`/`.pdf`. A
   hallucination check fails the build if any new company, tech, or number
   appears.
+- **JD enrichment** (`radar enrich`). Community-list postings usually arrive with
+  no description, so they can't be honestly assessed. This fetches the full JD
+  from the posting's own apply link (Greenhouse/Lever/Ashby detail APIs, plus
+  schema.org JobPosting JSON-LD for Microsoft careers and most company pages) and
+  re-derives term, deadline, fit, and gaps. Auto-prepare runs it automatically.
 - **Auto-prepare** (`radar autoapply`), with an honest readiness model. It never
   auto-submits and never calls anything "Ready" on its own — **Ready means _you_
   approved the résumé**. For each strong Seattle match it tailors a résumé and
@@ -107,6 +112,7 @@ Optional alerts and LLM tailoring: copy `.env.example` to `.env` and fill in
 | `radar gaps` | Cross-posting skill-gap rollup |
 | `radar detect "Company" [homepage]` | Auto-detect a company's ATS |
 | `radar grow` | Resolve the ATS for unresolved companies |
+| `radar enrich [--seattle]` | Fetch full job descriptions for thin postings |
 | `radar tailor <posting_id>` | Generate a tailored résumé |
 | `radar notes <posting_id>` | Generate the notes blocks |
 | `radar autoapply [--scope S] [--min-fit N]` | Auto-prepare clean-match postings; hold ones with gaps |

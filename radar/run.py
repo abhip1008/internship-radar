@@ -4,6 +4,7 @@ Commands:
   sweep   [--tier N] [--lists] [--no-notify]   run a collection sweep
   detect  "Company Name" [homepage]            probe a company's ATS
   grow                                         detect ATS for unresolved list companies
+  enrich  [--seattle] [--limit N]              fetch full JDs for thin postings
   tailor  <posting_id>                         generate a tailored resume
   notes   <posting_id>                         generate the notes blocks
   autoapply [--scope S] [--min-fit N]          auto-prepare clean-match postings
@@ -125,13 +126,30 @@ def cmd_notes(args) -> None:
     db.close()
 
 
+def cmd_enrich(args) -> None:
+    import asyncio
+
+    from . import enrich as enrich_mod
+    db = DB()
+    rows = db.open_postings(seattle_only=args.seattle)
+    if args.limit:
+        rows = rows[: args.limit]
+    print(f"Fetching full JDs for thin postings among {len(rows)} open rows ...")
+    summary = asyncio.run(enrich_mod.enrich_rows(db, rows))
+    print(json.dumps(summary, indent=2))
+    db.close()
+
+
 def cmd_autoapply(args) -> None:
     from . import autoapply
     db = DB()
     summary = autoapply.run(
         db=db, scope=args.scope, min_fit=args.min_fit, limit=args.limit,
-        use_llm=not args.no_llm,
+        use_llm=not args.no_llm, enrich=not args.no_enrich,
     )
+    if summary.get("enriched"):
+        e = summary["enriched"]
+        print(f"\nEnriched JDs: {e['enriched']}/{e['targets']} thin postings fetched full descriptions.")
     print(f"\nAuto-prepare — scope={summary['scope']}, min_fit={summary['min_fit']}")
     print(f"  considered: {summary['considered']}")
     print(f"  ⏳ tailored, awaiting your approval: {summary['tailored']}")
@@ -224,11 +242,17 @@ def build_parser() -> argparse.ArgumentParser:
     n.add_argument("posting_id"); n.add_argument("--no-llm", action="store_true")
     n.set_defaults(func=cmd_notes)
 
+    en = sub.add_parser("enrich", help="fetch full job descriptions for thin postings")
+    en.add_argument("--seattle", action="store_true")
+    en.add_argument("--limit", type=int, default=None)
+    en.set_defaults(func=cmd_enrich)
+
     aa = sub.add_parser("autoapply", help="auto-prepare (tailor) clean-match postings; hold ones with gaps")
     aa.add_argument("--scope", choices=["seattle", "all", "reviewing"], default=None)
     aa.add_argument("--min-fit", type=int, default=None, dest="min_fit")
     aa.add_argument("--limit", type=int, default=None)
     aa.add_argument("--no-llm", action="store_true")
+    aa.add_argument("--no-enrich", action="store_true", help="skip JD enrichment")
     aa.set_defaults(func=cmd_autoapply)
 
     sub.add_parser("gaps", help="cross-posting gap rollup").set_defaults(func=cmd_gaps)

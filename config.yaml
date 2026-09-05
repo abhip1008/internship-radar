@@ -20,7 +20,7 @@ autoapply:
   # anything with a real skill gap in a 'needs_improvement' state instead.
   scope: seattle          # seattle | all | reviewing
   min_fit: 60             # only auto-prepare postings at/above this fit
-  limit: 25               # max postings per run (caps LLM calls)
+  limit: 60               # max postings per run (caps JD fetches + LLM calls); re-run for more
 
 scoring:
   # Component weights must sum to 100. See radar/score.py.

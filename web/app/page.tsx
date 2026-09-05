@@ -76,8 +76,11 @@ export default function Home() {
     if (!res) {
       setPrepMsg("Auto-prepare needs the live API (run `make serve`).");
     } else {
+      const enr = res.enriched
+        ? `Fetched ${res.enriched.enriched} full JDs · `
+        : "";
       setPrepMsg(
-        `Tailored ${res.tailored} for review · ${res.thin_jd} thin-JD (review carefully) · held ${res.needs_improvement} with skill gaps — of ${res.considered}. Nothing is Ready until you Approve it.`
+        `${enr}Tailored ${res.tailored} for review · ${res.thin_jd} still thin-JD · held ${res.needs_improvement} with skill gaps — of ${res.considered}. Nothing is Ready until you Approve it.`
       );
       await load();
     }

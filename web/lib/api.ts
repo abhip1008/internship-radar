@@ -85,6 +85,7 @@ export interface AutoApplyResult {
   scope: string;
   min_fit: number;
   considered: number;
+  enriched: { targets: number; enriched: number; unresolved: number } | null;
   tailored: number;
   thin_jd: number;
   needs_improvement: number;

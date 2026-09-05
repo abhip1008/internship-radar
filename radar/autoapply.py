@@ -116,6 +116,7 @@ def run(
     min_fit: Optional[int] = None,
     limit: Optional[int] = None,
     use_llm: bool = True,
+    enrich: bool = True,
 ) -> dict[str, Any]:
     """Run auto-prepare over the selected candidates and return a summary."""
     cfg = load_config()
@@ -128,12 +129,25 @@ def run(
     db = db or DB()
     candidates = select_candidates(db, scope, min_fit)[:limit]
 
+    # Enrich thin candidates first so assessment has real JD text to judge (§ enrich).
+    enrich_summary = None
+    if enrich and candidates:
+        import asyncio
+
+        from .enrich import enrich_rows
+
+        enrich_summary = asyncio.run(enrich_rows(db, candidates))
+        # Reload rows so prepare_one sees the freshly-fetched descriptions.
+        fresh = {r["id"]: r for r in db.open_postings(seattle_only=(scope == "seattle"))}
+        candidates = [fresh.get(c["id"], c) for c in candidates]
+
     results = [prepare_one(db, row, use_llm=use_llm) for row in candidates]
 
     summary = {
         "scope": scope,
         "min_fit": min_fit,
         "considered": len(candidates),
+        "enriched": enrich_summary,
         "tailored": sum(1 for r in results if r["state"] == "tailored"),
         "thin_jd": sum(1 for r in results if r["state"] == "thin_jd"),
         "needs_improvement": sum(1 for r in results if r["state"] == "needs_improvement"),
