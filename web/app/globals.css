@@ -14,6 +14,24 @@
   --radius: 4px;
 }
 
+/* Dark theme — same structure, inverted greyscale, one brighter link blue and a
+   slightly warmer urgency scale so the runway bar still pops on a dark table. */
+html[data-theme="dark"] {
+  --paper: #0f1216;
+  --surface: #191d23;
+  --line: #2a2f37;
+  --ink: #e6e9ec;
+  --ink-muted: #8b949e;
+  --link: #6b9bff;
+  --urgent-0: #6b747e;
+  --urgent-1: #d9a441;
+  --urgent-2: #e5674f;
+  --ok: #4caf82;
+}
+html {
+  color-scheme: light dark;
+}
+
 * {
   box-sizing: border-box;
 }
@@ -263,6 +281,26 @@ td {
   inset: 0;
   background: rgba(20, 23, 26, 0.15);
   z-index: 30;
+}
+html[data-theme="dark"] .scrim {
+  background: rgba(0, 0, 0, 0.5);
+}
+
+/* theme toggle button in the top bar */
+.theme-toggle {
+  background: none;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  color: var(--ink-muted);
+  cursor: pointer;
+  font-size: 13px;
+  padding: 2px 8px;
+  margin-left: 10px;
+  font-family: inherit;
+}
+.theme-toggle:hover {
+  color: var(--ink);
+  border-color: var(--ink-muted);
 }
 .drawer {
   position: fixed;

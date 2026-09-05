@@ -38,6 +38,16 @@ def resolve_geo(location_text: str, description: str = "") -> dict[str, Any]:
     )
     is_wa = is_metro or any(w in haystack for w in gaz["washington"])
 
+    # International = matches a non-US marker AND carries no US signal. A
+    # multi-location posting that also lists a US office keeps its US flags and
+    # is NOT treated as international.
+    us_signal = is_metro or is_remote or is_wa or any(
+        s in cleaned for s in (" usa", ", us", "united states")
+    )
+    is_international = (not us_signal) and any(
+        m in cleaned for m in gaz.get("international_markers", [])
+    )
+
     # Build a normalized display list.
     locations: list[str] = []
     canonical = gaz.get("canonical", {})
@@ -53,6 +63,7 @@ def resolve_geo(location_text: str, description: str = "") -> dict[str, Any]:
         "is_seattle_metro": is_metro,
         "is_remote_us": is_remote,
         "is_wa": is_wa,
+        "is_international": is_international,
     }
 
 
@@ -90,6 +101,7 @@ def normalize(raw: RawPosting) -> Posting:
         is_seattle_metro=geo["is_seattle_metro"],
         is_remote_us=geo["is_remote_us"],
         is_wa=geo["is_wa"],
+        is_international=geo["is_international"],
         term=term,
         description=raw.description,
         posted_at=raw.posted_at,

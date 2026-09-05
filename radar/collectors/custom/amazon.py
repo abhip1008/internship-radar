@@ -28,16 +28,15 @@ async def collect(client: httpx.AsyncClient, company: dict[str, Any]) -> list[Ra
     out: list[RawPosting] = []
     offset = 0
     while True:
+        # NOTE: amazon.jobs' `category[]` facet value does NOT accept "internship"
+        # (returns 0 hits). We query broadly and let the downstream CS/term/geo
+        # filters (§6) do the trimming — coverage-first.
         params = {
             "normalized_country_code[]": "USA",
-            "radius": "100mi",
-            "facets[]": "normalized_country_code",
             "offset": offset,
             "result_limit": PAGE,
             "sort": "recent",
-            "category[]": "internship",
-            "query_options": "",
-            "base_query": "software intern",
+            "base_query": "intern",
         }
         data = await get_json(client, SEARCH, params=params)
         if not data or not data.get("jobs"):

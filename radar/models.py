@@ -42,6 +42,7 @@ class Posting(BaseModel):
     is_seattle_metro: bool = False
     is_remote_us: bool = False
     is_wa: bool = False
+    is_international: bool = False
 
     term: str = "unspecified"           # summer-2027 | fall-2026 | off-cycle | unspecified
     description: str = ""

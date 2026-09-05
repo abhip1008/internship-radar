@@ -40,6 +40,99 @@ washington:
   - richland
   - pullman
 
+# Non-US markers. If a posting's location matches one of these AND carries no US
+# signal (state/USA/remote-US), it's flagged international and can be dropped by
+# profile.exclude_international (config.yaml). Amazon uses ISO-3 prefixes like
+# "ESP - Madrid, Spain", so those are included too.
+international_markers:
+  # country names
+  - spain
+  - serbia
+  - india
+  - germany
+  - france
+  - italy
+  - ireland
+  - united kingdom
+  - england
+  - scotland
+  - canada
+  - mexico
+  - brazil
+  - japan
+  - china
+  - singapore
+  - australia
+  - netherlands
+  - poland
+  - romania
+  - portugal
+  - israel
+  - switzerland
+  - sweden
+  - denmark
+  - norway
+  - finland
+  - austria
+  - belgium
+  - luxembourg
+  - south korea
+  - taiwan
+  - philippines
+  - vietnam
+  - indonesia
+  - malaysia
+  - united arab emirates
+  - saudi arabia
+  - egypt
+  - south africa
+  - argentina
+  - colombia
+  - chile
+  - costa rica
+  # major foreign tech-hub cities that often appear without a country
+  - madrid
+  - barcelona
+  - belgrade
+  - bengaluru
+  - bangalore
+  - hyderabad
+  - chennai
+  - pune
+  - gurgaon
+  - london
+  - dublin
+  - toronto
+  - vancouver, bc
+  - montreal
+  - berlin
+  - munich
+  - paris
+  - amsterdam
+  - warsaw
+  - tel aviv
+  - tokyo
+  - beijing
+  - shanghai
+  - sydney
+  - sao paulo
+  # Amazon-style ISO-3 country prefixes ("ESP - Madrid")
+  - "esp -"
+  - "ind -"
+  - "deu -"
+  - "gbr -"
+  - "can -"
+  - "irl -"
+  - "fra -"
+  - "ita -"
+  - "pol -"
+  - "rou -"
+  - "jpn -"
+  - "chn -"
+  - "aus -"
+  - "bra -"
+  - "mex -"
+
 remote_us:
   - remote (us)
   - remote - us

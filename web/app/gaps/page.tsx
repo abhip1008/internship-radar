@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { getSnapshot } from "@/lib/api";
+import ThemeToggle from "../ThemeToggle";
 
 interface Gap {
   keyword: string;
@@ -28,6 +29,7 @@ export default function GapsPage() {
         <h1>Gap rollup</h1>
         <div className="stats">
           <Link href="/">← back to table</Link>
+          <ThemeToggle />
         </div>
       </div>
       <div style={{ padding: "20px" }}>

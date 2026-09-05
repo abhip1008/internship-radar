@@ -6,6 +6,7 @@ import type { Posting, Snapshot, Status } from "@/lib/types";
 import { getSnapshot, setStatus } from "@/lib/api";
 import { relTime, runway } from "@/lib/format";
 import Drawer from "./Drawer";
+import ThemeToggle from "./ThemeToggle";
 
 type TabKey = "all" | "seattle" | "new" | "closing" | "applied";
 
@@ -112,6 +113,7 @@ export default function Home() {
         <div className="stats">
           {snap.stats.open} open · {snap.stats.new_today} new today ·{" "}
           <Link href="/gaps">gaps ↗</Link>
+          <ThemeToggle />
         </div>
       </div>
 

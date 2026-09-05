@@ -7,8 +7,11 @@
 name: Collect
 
 on:
-  schedule:
-    - cron: "*/15 * * * *" # every 15 minutes (Tier 0 cadence)
+  # The 15-minute schedule is commented out until you deploy the read-only UI
+  # (e.g. Vercel) and actually want committed snapshots. Enabling it makes a
+  # bot commit every 15 minutes. Run manually meanwhile via the Actions tab.
+  # schedule:
+  #   - cron: "*/15 * * * *"   # every 15 minutes (Tier 0 cadence)
   workflow_dispatch:
 
 concurrency:

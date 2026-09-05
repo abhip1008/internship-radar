@@ -110,8 +110,18 @@ def eligibility_flags(description: str) -> list[str]:
     return [label for label, pat in ELIGIBILITY_FLAGS.items() if re.search(pat, text)]
 
 
-def evaluate(posting: Posting, target_terms: Optional[set[str]] = None) -> FilterResult:
-    """Apply the §6 filter chain. Geography never filters out — it only ranks."""
+def evaluate(
+    posting: Posting,
+    target_terms: Optional[set[str]] = None,
+    geo_scope: str = "all",
+) -> FilterResult:
+    """Apply the §6 filter chain.
+
+    geo_scope controls the one place geography *can* filter out (opt-in, §6.4):
+      all     -> never drop on geography (spec default)
+      us      -> drop international postings
+      seattle -> keep only Seattle-metro + US-remote
+    """
     title = posting.title
     terms = target_terms or TERM_INCLUDE_DEFAULT
 
@@ -123,6 +133,11 @@ def evaluate(posting: Posting, target_terms: Optional[set[str]] = None) -> Filte
         return FilterResult(False, "not_cs")
     if posting.term not in terms:
         return FilterResult(False, f"term_excluded:{posting.term}")
+
+    if geo_scope == "us" and posting.is_international:
+        return FilterResult(False, "international")
+    if geo_scope == "seattle" and not (posting.is_seattle_metro or posting.is_remote_us):
+        return FilterResult(False, "outside_seattle")
 
     flags = eligibility_flags(posting.description)
     return FilterResult(True, None, flags)

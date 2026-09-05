@@ -43,10 +43,11 @@ def _process(raws: list[RawPosting], companies_by_slug: dict[str, dict], target_
     """normalize -> filter -> score/deadlines. Returns kept postings (pre-dedupe)."""
     cfg = load_config()
     fallback_days = cfg["deadlines"]["global_fallback_days"]
+    geo_scope = cfg["profile"].get("geo_scope", "all")
     kept: list[Posting] = []
     for raw in raws:
         p = normalize.normalize(raw)
-        verdict = filters.evaluate(p, target_terms)
+        verdict = filters.evaluate(p, target_terms, geo_scope=geo_scope)
         if not verdict.passed:
             rejection_log.info("REJECT %s | %s | %s", p.company_name, p.title, verdict.reason)
             continue

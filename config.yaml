@@ -9,6 +9,11 @@ profile:
   target_terms: [summer-2027, fall-2026, off-cycle, unspecified]
   home_metro: seattle
   max_commute_miles: 60
+  # Geographic scope for what enters the DB:
+  #   seattle -> only Seattle-metro + US-remote roles
+  #   us      -> everything in the US (drops international); Seattle still sorts first
+  #   all     -> no geo filtering (spec default)
+  geo_scope: us
 
 scoring:
   # Component weights must sum to 100. See radar/score.py.
