@@ -8,7 +8,7 @@ from __future__ import annotations
 import re
 from typing import Any
 
-from ..score import KNOWN_STACK, extract_jd_stack
+from ..score import extract_jd_stack
 
 DOMAIN_SIGNALS = {
     "ai-systems": ["machine learning", "ml", " ai ", "llm", "model", "nlp", "deep learning"],

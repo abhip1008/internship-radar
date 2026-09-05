@@ -47,7 +47,7 @@ export interface Posting {
   resume_pdf: string | null;
   resume_tex: string | null;
   resume_approved: boolean;
-  prep_state: "ready" | "needs_improvement" | null;
+  prep_state: "tailored" | "needs_improvement" | "thin_jd" | null;
   notes_preview: string;
   has_notes: boolean;
   // detail-only
@@ -55,6 +55,19 @@ export interface Posting {
   sources?: { type: string; url: string }[];
   description?: string;
   user_notes?: string;
+  prep_meta?: {
+    assessment?: {
+      state: string;
+      missing_must: string[];
+      missing_nice: string[];
+      matched: string[];
+      jd_chars: number;
+      note: string;
+    };
+    diff?: { id: string; source: string; base: string; final: string; changed: boolean }[];
+    changed_count?: number;
+    coverage?: { present: string[]; missing: string[] };
+  };
 }
 
 export interface Snapshot {

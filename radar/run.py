@@ -134,13 +134,21 @@ def cmd_autoapply(args) -> None:
     )
     print(f"\nAuto-prepare — scope={summary['scope']}, min_fit={summary['min_fit']}")
     print(f"  considered: {summary['considered']}")
-    print(f"  ✓ ready (resume tailored): {summary['ready']}")
-    print(f"  ⚠ needs improvement (held): {summary['needs_improvement']}\n")
+    print(f"  ⏳ tailored, awaiting your approval: {summary['tailored']}")
+    print(f"  ◍ thin JD (tailored generic, review): {summary['thin_jd']}")
+    print(f"  ⚠ held — missing must-have skills:   {summary['needs_improvement']}\n")
+    marks = {"tailored": "⏳", "thin_jd": "◍", "needs_improvement": "⚠", "error": "✗"}
     for r in summary["results"]:
-        mark = "✓" if r["state"] == "ready" else "⚠"
-        detail = "clean match — resume ready" if r["state"] == "ready" else f"gaps: {', '.join(r['gaps'])}"
-        print(f"  {mark} {r['company'][:20]:20} {r['title'][:38]:38} {detail}")
-    print("\nReminder: this prepares resumes only — you still press submit.")
+        if r["state"] == "tailored":
+            detail = f"tailored ({r.get('changed_count', 0)} bullets re-angled) — review & approve"
+        elif r["state"] == "thin_jd":
+            detail = "thin JD — generic tailoring, review carefully"
+        elif r["state"] == "needs_improvement":
+            detail = f"missing: {', '.join(r['gaps'])}"
+        else:
+            detail = r.get("error", "error")
+        print(f"  {marks.get(r['state'], '?')} {r['company'][:20]:20} {r['title'][:36]:36} {detail}")
+    print("\nNothing is 'Ready' until you approve it in the drawer. This never submits.")
     db.close()
 
 

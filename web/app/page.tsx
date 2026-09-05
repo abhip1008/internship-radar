@@ -40,7 +40,7 @@ export default function Home() {
       list = list.filter(
         (p) => p.closes_kind === "rolling" || (p.days_remaining !== null && p.days_remaining <= 7)
       );
-    if (tab === "ready") list = list.filter((p) => p.prep_state === "ready");
+    if (tab === "ready") list = list.filter((p) => p.resume_approved);
     if (tab === "applied") list = list.filter((p) => p.status === "applied");
     if (q.trim()) {
       const needle = q.toLowerCase();
@@ -64,7 +64,7 @@ export default function Home() {
       closing: all.filter(
         (p) => p.closes_kind === "rolling" || (p.days_remaining !== null && p.days_remaining <= 7)
       ).length,
-      ready: all.filter((p) => p.prep_state === "ready").length,
+      ready: all.filter((p) => p.resume_approved).length,
       applied: all.filter((p) => p.status === "applied").length,
     };
   }, [snap]);
@@ -77,7 +77,7 @@ export default function Home() {
       setPrepMsg("Auto-prepare needs the live API (run `make serve`).");
     } else {
       setPrepMsg(
-        `Auto-prepared ${res.ready} clean match${res.ready === 1 ? "" : "es"} · held ${res.needs_improvement} with gaps (of ${res.considered} considered).`
+        `Tailored ${res.tailored} for review · ${res.thin_jd} thin-JD (review carefully) · held ${res.needs_improvement} with skill gaps — of ${res.considered}. Nothing is Ready until you Approve it.`
       );
       await load();
     }
@@ -119,6 +119,19 @@ export default function Home() {
     setSnap((prev) =>
       prev
         ? { ...prev, postings: prev.postings.map((p) => (p.id === id ? { ...p, status: s } : p)) }
+        : prev
+    );
+  };
+
+  const applyApprove = (id: string, approved: boolean) => {
+    setSnap((prev) =>
+      prev
+        ? {
+            ...prev,
+            postings: prev.postings.map((p) =>
+              p.id === id ? { ...p, resume_approved: approved } : p
+            ),
+          }
         : prev
     );
   };
@@ -217,7 +230,12 @@ export default function Home() {
       </div>
 
       {openId && (
-        <Drawer id={openId} onClose={() => setOpenId(null)} onStatusChange={applyStatus} />
+        <Drawer
+          id={openId}
+          onClose={() => setOpenId(null)}
+          onStatusChange={applyStatus}
+          onApprove={applyApprove}
+        />
       )}
     </div>
   );
@@ -279,12 +297,20 @@ function Row({
         </div>
       </td>
       <td className="resume-links" onClick={(e) => e.stopPropagation()}>
-        {p.prep_state === "ready" ? (
-          <span className="prep ready" title="Auto-prepared — resume tailored, ready to submit">
+        {p.resume_approved ? (
+          <span className="prep ready" title="You approved this — ready to submit">
             ✓ Ready
           </span>
+        ) : p.prep_state === "tailored" ? (
+          <span className="prep review" title="Tailored — open to review the diff and approve">
+            ⏳ Review
+          </span>
+        ) : p.prep_state === "thin_jd" ? (
+          <span className="prep thin" title="Too little job-description text to assess — open to read the full JD">
+            ◍ Thin JD
+          </span>
         ) : p.prep_state === "needs_improvement" ? (
-          <span className="prep gaps" title="Held by auto-prepare — has skill gaps to address">
+          <span className="prep gaps" title="Held — missing must-have skills for this role">
             ⚠ Gaps
           </span>
         ) : p.resume_tex ? (

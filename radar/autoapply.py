@@ -61,36 +61,52 @@ def select_candidates(db: DB, scope: str, min_fit: int) -> list[dict[str, Any]]:
 
 
 def prepare_one(db: DB, row: dict[str, Any], use_llm: bool = True) -> dict[str, Any]:
-    """Prepare a single posting. Returns {id, company, title, state, gaps}."""
+    """Prepare a single posting. Returns {id, company, title, state, ...}.
+
+    Nothing is marked Ready here — Ready means YOU approved the resume. This only
+    decides: hold (real gaps), tailor + await review (strong), or tailor a generic
+    pass and flag it (thin JD).
+    """
+    from .assess import assess
+
     posting = _row_to_posting(row)
 
-    # 1) Notes first — this is where the gap list comes from.
+    # Notes first — powers the drawer's three blocks and the /gaps rollup.
     note = notes_mod.generate(posting, use_llm=use_llm)
     db.set_notes(posting.id, note)
-    missing = note["keyword_coverage"]["missing"]
     for kw in note["keyword_coverage"]["present"]:
         db.bump_keyword(kw, covered=True)
-    for kw in missing:
+    for kw in note["keyword_coverage"]["missing"]:
         db.bump_keyword(kw, covered=False)
 
-    base = {"id": posting.id, "company": posting.company_name, "title": posting.title, "gaps": missing}
+    a = assess(posting)
+    base = {"id": posting.id, "company": posting.company_name, "title": posting.title,
+            "gaps": a.missing_must, "note": a.note}
 
-    # 2) GATE: any real gap -> hold for improvement, do not tailor.
-    if missing:
-        db.set_prep_state(posting.id, "needs_improvement")
+    # GATE: missing must-have skills -> hold, do not tailor.
+    if a.state == "needs_improvement":
+        db.set_prep_state(posting.id, "needs_improvement", meta={"assessment": a.to_dict()})
         return {**base, "state": "needs_improvement"}
 
-    # 3) Clean match -> auto-tailor the resume.
+    # strong or thin_jd -> tailor (so there is a file), but await your approval.
     from .tailor import tailor
 
     try:
         result = tailor(posting, use_llm=use_llm)
         db.set_resume(posting.id, result["tex_path"], result["pdf_path"])
-        db.set_prep_state(posting.id, "ready")
-        return {**base, "state": "ready", "resume_tex": result["tex_path"], "resume_pdf": result["pdf_path"]}
+        meta = {
+            "assessment": a.to_dict(),
+            "diff": result["diff"],
+            "changed_count": result["changed_count"],
+            "coverage": result["keyword_coverage"],
+        }
+        db.set_prep_state(posting.id, a.state if a.state == "thin_jd" else "tailored", meta=meta)
+        return {**base, "state": a.state if a.state == "thin_jd" else "tailored",
+                "changed_count": result["changed_count"],
+                "resume_tex": result["tex_path"], "resume_pdf": result["pdf_path"]}
     except Exception as exc:  # tailoring must never crash the batch
         log.warning("tailor failed for %s: %s", posting.id, exc)
-        db.set_prep_state(posting.id, "needs_improvement")
+        db.set_prep_state(posting.id, "needs_improvement", meta={"assessment": a.to_dict()})
         return {**base, "state": "error", "error": str(exc)}
 
 
@@ -113,15 +129,14 @@ def run(
     candidates = select_candidates(db, scope, min_fit)[:limit]
 
     results = [prepare_one(db, row, use_llm=use_llm) for row in candidates]
-    ready = [r for r in results if r["state"] == "ready"]
-    needs = [r for r in results if r["state"] == "needs_improvement"]
 
     summary = {
         "scope": scope,
         "min_fit": min_fit,
         "considered": len(candidates),
-        "ready": len(ready),
-        "needs_improvement": len(needs),
+        "tailored": sum(1 for r in results if r["state"] == "tailored"),
+        "thin_jd": sum(1 for r in results if r["state"] == "thin_jd"),
+        "needs_improvement": sum(1 for r in results if r["state"] == "needs_improvement"),
         "results": results,
     }
     if own_db:

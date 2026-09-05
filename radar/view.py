@@ -57,6 +57,7 @@ def posting_row(db: DB, row: dict[str, Any], detail: bool = False) -> dict[str, 
         out["sources"] = _loads(row.get("sources"), [])
         out["description"] = row.get("description", "")
         out["user_notes"] = app.get("user_notes", "")
+        out["prep_meta"] = _loads(app.get("prep_meta"), {})
     return out
 
 

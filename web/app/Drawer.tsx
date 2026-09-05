@@ -19,10 +19,12 @@ export default function Drawer({
   id,
   onClose,
   onStatusChange,
+  onApprove,
 }: {
   id: string;
   onClose: () => void;
   onStatusChange: (id: string, status: Status) => void;
+  onApprove: (id: string, approved: boolean) => void;
 }) {
   const [p, setP] = useState<Posting | null>(null);
   const [busy, setBusy] = useState(false);
@@ -65,6 +67,23 @@ export default function Drawer({
   };
 
   const fit = p.fit_breakdown || {};
+  const assessment = p.prep_meta?.assessment;
+  const diff = p.prep_meta?.diff ?? [];
+  const changedCount = p.prep_meta?.changed_count ?? diff.filter((d) => d.changed).length;
+  const assessLabel =
+    assessment?.state === "strong"
+      ? "Strong match"
+      : assessment?.state === "needs_improvement"
+        ? "Needs improvement"
+        : assessment?.state === "thin_jd"
+          ? "Limited info"
+          : "";
+  const assessColor =
+    assessment?.state === "strong"
+      ? "var(--ok)"
+      : assessment?.state === "needs_improvement"
+        ? "var(--urgent-1)"
+        : "var(--ink-muted)";
 
   return (
     <>
@@ -114,18 +133,33 @@ export default function Drawer({
           )}
         </section>
 
+        {/* Assessment — the honest read on this specific posting */}
+        {assessment && (
+          <section>
+            <h3>Readiness</h3>
+            <div className="note-block" style={{ color: assessColor }}>
+              <b>{assessLabel}</b>
+              {assessment.note}
+            </div>
+            {assessment.missing_must?.length > 0 && (
+              <div>
+                Missing must-haves:{" "}
+                {assessment.missing_must.map((k) => (
+                  <span className="kw miss" key={k}>
+                    {k}
+                  </span>
+                ))}
+              </div>
+            )}
+          </section>
+        )}
+
         {/* Resume */}
         <section>
           <h3>Resume</h3>
-          {p.prep_state === "ready" && (
+          {p.resume_approved && (
             <div className="note-block" style={{ color: "var(--ok)" }}>
-              ✓ Auto-prepared — clean match, resume tailored and ready to submit.
-            </div>
-          )}
-          {p.prep_state === "needs_improvement" && (
-            <div className="note-block" style={{ color: "var(--urgent-1)" }}>
-              ⚠ Held by auto-prepare — this posting has skill gaps (see Notes). Close them or
-              generate manually below.
+              ✓ Approved by you — Ready to submit.
             </div>
           )}
           {p.resume_tex ? (
@@ -143,13 +177,15 @@ export default function Drawer({
                   {busy ? "Working…" : "Regenerate"}
                 </button>
                 <button
-                  className="btn"
+                  className={`btn ${p.resume_approved ? "" : "primary"}`}
                   onClick={() => {
-                    setP({ ...p, resume_approved: !p.resume_approved });
-                    approveResume(id, !p.resume_approved);
+                    const next = !p.resume_approved;
+                    setP({ ...p, resume_approved: next });
+                    approveResume(id, next);
+                    onApprove(id, next);
                   }}
                 >
-                  {p.resume_approved ? "✓ Approved" : "Approve"}
+                  {p.resume_approved ? "✓ Approved — click to unapprove" : "Approve → mark Ready"}
                 </button>
               </div>
             </div>
@@ -159,6 +195,41 @@ export default function Drawer({
             </button>
           )}
         </section>
+
+        {/* Diff vs. base — what was re-angled for THIS posting */}
+        {diff.length > 0 && (
+          <section>
+            <h3>
+              What changed for this role{" "}
+              <span className="muted" style={{ textTransform: "none", fontWeight: 400 }}>
+                ({changedCount} of {diff.length} bullets re-angled)
+              </span>
+            </h3>
+            {changedCount === 0 && (
+              <div className="muted" style={{ fontSize: 12, marginBottom: 8 }}>
+                Selection and ordering were tailored to this JD, but bullet wording is verbatim —
+                set <code>GEMINI_API_KEY</code> (free tier) to enable sentence-level re-angling.
+              </div>
+            )}
+            {diff.map((d) => (
+              <div key={d.id} className="note-block">
+                <span className="muted" style={{ fontSize: 11 }}>
+                  {d.source} {d.changed ? "· re-angled" : "· verbatim"}
+                </span>
+                {d.changed ? (
+                  <>
+                    <div style={{ color: "var(--ink-muted)", textDecoration: "line-through" }}>
+                      {d.base}
+                    </div>
+                    <div style={{ color: "var(--ink)" }}>{d.final}</div>
+                  </>
+                ) : (
+                  <div>{d.final}</div>
+                )}
+              </div>
+            ))}
+          </section>
+        )}
 
         {/* Keyword coverage */}
         {p.notes?.keyword_coverage && (

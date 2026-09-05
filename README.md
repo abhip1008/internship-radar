@@ -31,10 +31,13 @@ aggregators that scrape them.
   single experience bank — never invented — rendered to `.tex`/`.pdf`. A
   hallucination check fails the build if any new company, tech, or number
   appears.
-- **Auto-prepare** (`radar autoapply`). Batch-tailors résumés for strong Seattle
-  matches so they're one click from submitting — but *holds* any posting with a
-  real skill gap in a `needs_improvement` state instead of auto-tailoring it, so
-  you address the gap (or apply deliberately) first. It never auto-submits.
+- **Auto-prepare** (`radar autoapply`), with an honest readiness model. It never
+  auto-submits and never calls anything "Ready" on its own — **Ready means _you_
+  approved the résumé**. For each strong Seattle match it tailors a résumé and
+  leaves it **⏳ Review**; postings missing a **must-have** skill are **held**
+  (⚠ Gaps) rather than tailored; postings with too little job-description text to
+  judge are flagged **◍ Thin JD** instead of pretended-ready. The detail drawer
+  shows a **diff vs. your base résumé** so approving is an informed click.
 - **Actionable notes per posting.** The skill gaps in the JD, the highest-ROI
   thing to build to close them, and the one signal that would make *this*
   reviewer stop.

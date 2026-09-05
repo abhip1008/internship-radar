@@ -21,16 +21,28 @@ def rephrase(bullets: list[Bullet], reqs: dict[str, Any], use_llm: bool = True) 
     if not (use_llm and bullets):
         return result
 
+    must = ", ".join(reqs.get("must_have", [])) or "n/a"
+    nice = ", ".join(reqs.get("nice_to_have", [])) or "n/a"
     keywords = ", ".join(reqs["keywords"]) or "general software engineering"
+    domain = reqs.get("domain", "software")
     payload = [{"id": b.id, "text": b.text} for b in bullets]
     prompt = (
-        "Re-angle each resume bullet to foreground these JD-relevant themes: "
-        f"{keywords}. STRICT RULES: do not add any employer, title, date, technology, "
-        "or number that is not already in the original text. Only reshape emphasis and wording. "
-        "Keep each bullet one line. Return strict JSON: a list of {\"id\":\"\",\"text\":\"\"}.\n\n"
+        f"You are tailoring a resume for a specific {domain} internship.\n"
+        f"This role's MUST-HAVE skills: {must}\n"
+        f"Nice-to-have: {nice}\n"
+        f"All JD keywords: {keywords}\n\n"
+        "Rewrite EACH bullet so it foregrounds the angle most relevant to THIS role — "
+        "lead with the JD-relevant technology or outcome, use the JD's own vocabulary where it "
+        "honestly applies, and put the strongest signal first. Make each rewrite meaningfully "
+        "different from the original in emphasis and phrasing (not a trivial reword).\n"
+        "STRICT RULES (non-negotiable): do NOT introduce any employer, job title, date, "
+        "technology, tool, or number that is not already in the original bullet. You may only "
+        "re-angle and rephrase facts that are already there — never invent capabilities. "
+        "Keep each bullet to one line, strong action verb first.\n"
+        'Return strict JSON: a list of {"id":"","text":""}.\n\n'
         f"Bullets:\n{json.dumps(payload)}"
     )
-    out = complete(prompt, max_tokens=900, temperature=0.3)
+    out = complete(prompt, max_tokens=1100, temperature=0.4)
     if not out:
         return result
 

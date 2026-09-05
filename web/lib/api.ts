@@ -85,7 +85,8 @@ export interface AutoApplyResult {
   scope: string;
   min_fit: number;
   considered: number;
-  ready: number;
+  tailored: number;
+  thin_jd: number;
   needs_improvement: number;
   results: { id: string; company: string; title: string; state: string; gaps: string[] }[];
 }

@@ -1,0 +1,174 @@
+# Skill vocabulary for JD parsing (fit score, gap detection, tailoring).
+# Maps every alias we might see in a job description to a canonical skill name.
+# Broader vocab => more real requirements detected => more honest "ready".
+# Keep aliases lowercase; matching is word-boundary based.
+
+# languages
+python: python
+javascript: javascript
+js: javascript
+typescript: typescript
+ts: typescript
+java: java
+"c++": "c++"
+cpp: "c++"
+"c#": "c#"
+c: c
+go: go
+golang: go
+rust: rust
+ruby: ruby
+php: php
+scala: scala
+kotlin: kotlin
+swift: swift
+"objective-c": "objective-c"
+r: r
+matlab: matlab
+perl: perl
+haskell: haskell
+elixir: elixir
+dart: dart
+sql: sql
+bash: bash
+shell: shell
+powershell: powershell
+
+# frontend
+react: react
+"react.js": react
+"react native": react native
+angular: angular
+vue: vue
+"vue.js": vue
+svelte: svelte
+next: next.js
+"next.js": next.js
+nextjs: next.js
+redux: redux
+html: html
+css: css
+sass: sass
+tailwind: tailwind
+"tailwind css": tailwind
+
+# backend / frameworks
+node: node.js
+"node.js": node.js
+nodejs: node.js
+express: express
+django: django
+flask: flask
+fastapi: fastapi
+spring: spring
+"spring boot": spring
+rails: rails
+"ruby on rails": rails
+".net": .net
+dotnet: .net
+laravel: laravel
+nestjs: nestjs
+graphql: graphql
+rest: rest
+grpc: grpc
+
+# data / databases
+postgres: postgresql
+postgresql: postgresql
+mysql: mysql
+sqlite: sqlite
+mongodb: mongodb
+mongo: mongodb
+redis: redis
+cassandra: cassandra
+dynamodb: dynamodb
+elasticsearch: elasticsearch
+snowflake: snowflake
+bigquery: bigquery
+redshift: redshift
+supabase: supabase
+firebase: firebase
+spark: spark
+"apache spark": spark
+hadoop: hadoop
+kafka: kafka
+airflow: airflow
+dbt: dbt
+etl: etl
+pandas: pandas
+numpy: numpy
+
+# cloud / infra / devops
+aws: aws
+"amazon web services": aws
+azure: azure
+gcp: gcp
+"google cloud": gcp
+docker: docker
+kubernetes: kubernetes
+k8s: kubernetes
+terraform: terraform
+ansible: ansible
+jenkins: jenkins
+"github actions": ci/cd
+"ci/cd": ci/cd
+cicd: ci/cd
+ci: ci/cd
+serverless: serverless
+lambda: aws lambda
+ec2: aws
+s3: aws
+microservices: microservices
+"distributed systems": distributed systems
+linux: linux
+nginx: nginx
+
+# ml / ai / data science
+"machine learning": machine learning
+ml: machine learning
+"deep learning": deep learning
+"artificial intelligence": ai
+ai: ai
+nlp: nlp
+"computer vision": computer vision
+tensorflow: tensorflow
+pytorch: pytorch
+"scikit-learn": scikit-learn
+sklearn: scikit-learn
+keras: keras
+llm: llm
+llms: llm
+"large language models": llm
+transformers: transformers
+"data science": data science
+statistics: statistics
+
+# tools / practices / concepts
+git: git
+github: git
+gitlab: git
+agile: agile
+scrum: agile
+jira: jira
+oauth: oauth 2.0
+jwt: jwt
+stripe: stripe
+"unit testing": testing
+testing: testing
+pytest: testing
+jest: testing
+"test-driven": testing
+tdd: testing
+"data structures": data structures
+algorithms: algorithms
+"object-oriented": oop
+oop: oop
+"web development": web development
+api: api
+apis: api
+websockets: websockets
+concurrency: concurrency
+multithreading: concurrency
+"row-level security": security
+security: security
+cybersecurity: security

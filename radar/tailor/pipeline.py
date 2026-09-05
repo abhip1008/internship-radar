@@ -39,10 +39,28 @@ def tailor(posting: Posting, use_llm: bool = True) -> dict[str, Any]:
     rendered = render(posting.company_name, posting.title, selection, rephrased)
 
     coverage = keyword_coverage(reqs, list(rephrased.values()))
+
+    # Diff vs. base: which selected bullets were re-angled for this specific post,
+    # so approving in the UI is an informed click (spec §10 guardrail #3).
+    diff = []
+    for b in all_bullets:
+        final = rephrased.get(b.id, b.text)
+        diff.append({
+            "id": b.id,
+            "source": b.source_name,
+            "base": b.text,
+            "final": final,
+            "changed": final.strip() != b.text.strip(),
+        })
+    changed_count = sum(1 for d in diff if d["changed"])
+
     return {
         "requirements": reqs,
         "tex_path": rendered["tex_path"],
         "pdf_path": rendered["pdf_path"],
         "keyword_coverage": coverage,
         "selected_bullet_ids": [b.id for b in all_bullets],
+        "diff": diff,
+        "changed_count": changed_count,
+        "rephrased": rephrased,
     }

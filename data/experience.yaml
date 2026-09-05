@@ -101,3 +101,17 @@ skills:
   data: [PostgreSQL, Supabase]
   ai: [Ollama, Nemotron, prompt engineering, agentic pipelines]
   tools: [Git, Agile, OOP, Stripe, OAuth 2.0]
+
+# Concepts you can genuinely defend from your projects/coursework but don't list
+# as headline skills. Used ONLY for honest gap detection (assess.py / notes.py) —
+# NOT rendered on the resume. Keep this truthful: only add what you can back up.
+demonstrated:
+  - rest
+  - api
+  - backend
+  - frontend
+  - web development
+  - data structures
+  - oop
+  - concurrency
+  - security

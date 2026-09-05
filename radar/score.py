@@ -14,38 +14,53 @@ import yaml
 from .config import data_path, load_config
 from .models import Posting
 
-# Techs we can recognize in a JD, mapped to the canonical skill name.
-KNOWN_STACK = {
-    "python": "python", "javascript": "javascript", "typescript": "typescript",
-    "java": "java", "sql": "sql", "react": "react", "react native": "react native",
-    "node": "node.js", "node.js": "node.js", "express": "express",
-    "postgres": "postgresql", "postgresql": "postgresql", "supabase": "supabase",
-    "stripe": "stripe", "oauth": "oauth 2.0", "git": "git",
-    # Common JD techs the candidate does NOT have — still counted in the denominator.
-    "aws": "aws", "azure": "azure", "gcp": "gcp", "docker": "docker",
-    "kubernetes": "kubernetes", "go": "go", "golang": "go", "c++": "c++",
-    "rust": "rust", "graphql": "graphql", "spark": "spark", "kafka": "kafka",
-    "tensorflow": "tensorflow", "pytorch": "pytorch",
-}
+@lru_cache(maxsize=1)
+def _vocab() -> dict[str, str]:
+    """alias -> canonical skill name (data/skills_vocab.yaml)."""
+    with open(data_path("skills_vocab.yaml"), "r", encoding="utf-8") as fh:
+        return {str(k).lower(): str(v).lower() for k, v in yaml.safe_load(fh).items()}
 
 
 @lru_cache(maxsize=1)
 def _your_stack() -> set[str]:
+    """The candidate's real skills: declared skills + every tag/stack token in the
+    experience bank, all mapped through the vocab to canonical names. This is the
+    honest 'what you actually have' set used for gap detection."""
     with open(data_path("experience.yaml"), "r", encoding="utf-8") as fh:
         bank = yaml.safe_load(fh)
-    skills = bank.get("skills", {})
+    vocab = _vocab()
     out: set[str] = set()
-    for group in skills.values():
+
+    def add(token: str) -> None:
+        t = token.lower().strip()
+        out.add(t)
+        if t in vocab:
+            out.add(vocab[t])
+
+    for group in bank.get("skills", {}).values():
         for item in group:
-            out.add(item.lower())
+            add(item)
+    for item in bank.get("demonstrated", []):
+        add(item)
+    for course in bank.get("identity", {}).get("education", {}).get("coursework", []):
+        add(course)
+    for section in ("experiences", "projects"):
+        for item in bank.get(section, []):
+            for s in item.get("stack", []):
+                add(s)
+            for b in item.get("bullets", []):
+                for tag in b.get("tags", []):
+                    add(tag)
     return out
 
 
 def extract_jd_stack(text: str) -> set[str]:
+    """Canonical skills mentioned in a JD (word-boundary matched against vocab)."""
     t = text.lower()
+    vocab = _vocab()
     found: set[str] = set()
-    for needle, canonical in KNOWN_STACK.items():
-        if re.search(r"\b" + re.escape(needle) + r"\b", t):
+    for alias, canonical in vocab.items():
+        if re.search(r"(?<![\w+#.])" + re.escape(alias) + r"(?![\w+#])", t):
             found.add(canonical)
     return found
 

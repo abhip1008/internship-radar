@@ -247,6 +247,12 @@ td {
 .prep.ready {
   color: var(--ok);
 }
+.prep.review {
+  color: var(--link);
+}
+.prep.thin {
+  color: var(--ink-muted);
+}
 .prep.gaps {
   color: var(--urgent-1);
 }

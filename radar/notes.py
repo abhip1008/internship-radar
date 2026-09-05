@@ -16,7 +16,7 @@ import yaml
 from .config import data_path
 from .llm import complete
 from .models import Posting
-from .score import KNOWN_STACK, extract_jd_stack, _your_stack
+from .score import extract_jd_stack, _your_stack
 
 
 @lru_cache(maxsize=1)

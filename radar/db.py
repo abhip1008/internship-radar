@@ -62,7 +62,8 @@ CREATE TABLE IF NOT EXISTS applications (
   user_notes TEXT,
   referral TEXT,
   next_action TEXT, next_action_due TEXT,
-  prep_state TEXT                 -- auto-prepare: 'ready' | 'needs_improvement' | NULL
+  prep_state TEXT,                -- auto-prepare: 'tailored' | 'needs_improvement' | 'thin_jd' | NULL
+  prep_meta TEXT                  -- JSON: {assessment, diff, coverage, changed_count}
 );
 
 CREATE TABLE IF NOT EXISTS keyword_stats (
@@ -99,6 +100,13 @@ class DB:
         cols = {r["name"] for r in self.conn.execute("PRAGMA table_info(applications)").fetchall()}
         if "prep_state" not in cols:
             self.conn.execute("ALTER TABLE applications ADD COLUMN prep_state TEXT")
+        if "prep_meta" not in cols:
+            self.conn.execute("ALTER TABLE applications ADD COLUMN prep_meta TEXT")
+        # 'ready' used to mean "auto-tailored"; it now means "you approved it".
+        # Old auto-tailored rows become 'tailored' (awaiting approval).
+        self.conn.execute(
+            "UPDATE applications SET prep_state='tailored' WHERE prep_state='ready'"
+        )
 
     def close(self) -> None:
         self.conn.close()
@@ -273,10 +281,16 @@ class DB:
         )
         self.conn.commit()
 
-    def set_prep_state(self, pid: str, state: Optional[str]) -> None:
-        self.conn.execute(
-            "UPDATE applications SET prep_state=? WHERE posting_id=?", (state, pid)
-        )
+    def set_prep_state(self, pid: str, state: Optional[str], meta: Optional[dict[str, Any]] = None) -> None:
+        if meta is None:
+            self.conn.execute(
+                "UPDATE applications SET prep_state=? WHERE posting_id=?", (state, pid)
+            )
+        else:
+            self.conn.execute(
+                "UPDATE applications SET prep_state=?, prep_meta=? WHERE posting_id=?",
+                (state, _dumps(meta), pid),
+            )
         self.conn.commit()
 
     def get_application(self, pid: str) -> Optional[dict[str, Any]]:
