@@ -117,6 +117,17 @@ export default function Drawer({
         {/* Resume */}
         <section>
           <h3>Resume</h3>
+          {p.prep_state === "ready" && (
+            <div className="note-block" style={{ color: "var(--ok)" }}>
+              ✓ Auto-prepared — clean match, resume tailored and ready to submit.
+            </div>
+          )}
+          {p.prep_state === "needs_improvement" && (
+            <div className="note-block" style={{ color: "var(--urgent-1)" }}>
+              ⚠ Held by auto-prepare — this posting has skill gaps (see Notes). Close them or
+              generate manually below.
+            </div>
+          )}
           {p.resume_tex ? (
             <div className="resume-links">
               {p.resume_pdf && (

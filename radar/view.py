@@ -48,6 +48,7 @@ def posting_row(db: DB, row: dict[str, Any], detail: bool = False) -> dict[str, 
         "resume_pdf": app.get("resume_pdf_path"),
         "resume_tex": app.get("resume_tex_path"),
         "resume_approved": bool(app.get("resume_approved")),
+        "prep_state": app.get("prep_state"),
         "notes_preview": (notes.get("gaps", "") or "")[:160],
         "has_notes": bool(notes),
     }

@@ -47,6 +47,7 @@ export interface Posting {
   resume_pdf: string | null;
   resume_tex: string | null;
   resume_approved: boolean;
+  prep_state: "ready" | "needs_improvement" | null;
   notes_preview: string;
   has_notes: boolean;
   // detail-only

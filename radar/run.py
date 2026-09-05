@@ -6,6 +6,7 @@ Commands:
   grow                                         detect ATS for unresolved list companies
   tailor  <posting_id>                         generate a tailored resume
   notes   <posting_id>                         generate the notes blocks
+  autoapply [--scope S] [--min-fit N]          auto-prepare clean-match postings
   gaps                                          print the cross-posting gap rollup
   table                                         print the current open table
   export  [path]                               dump JSON snapshot for the UI
@@ -124,6 +125,25 @@ def cmd_notes(args) -> None:
     db.close()
 
 
+def cmd_autoapply(args) -> None:
+    from . import autoapply
+    db = DB()
+    summary = autoapply.run(
+        db=db, scope=args.scope, min_fit=args.min_fit, limit=args.limit,
+        use_llm=not args.no_llm,
+    )
+    print(f"\nAuto-prepare — scope={summary['scope']}, min_fit={summary['min_fit']}")
+    print(f"  considered: {summary['considered']}")
+    print(f"  ✓ ready (resume tailored): {summary['ready']}")
+    print(f"  ⚠ needs improvement (held): {summary['needs_improvement']}\n")
+    for r in summary["results"]:
+        mark = "✓" if r["state"] == "ready" else "⚠"
+        detail = "clean match — resume ready" if r["state"] == "ready" else f"gaps: {', '.join(r['gaps'])}"
+        print(f"  {mark} {r['company'][:20]:20} {r['title'][:38]:38} {detail}")
+    print("\nReminder: this prepares resumes only — you still press submit.")
+    db.close()
+
+
 def cmd_gaps(args) -> None:
     db = DB()
     rows = db.keyword_rollup()
@@ -195,6 +215,13 @@ def build_parser() -> argparse.ArgumentParser:
     n = sub.add_parser("notes", help="generate notes blocks")
     n.add_argument("posting_id"); n.add_argument("--no-llm", action="store_true")
     n.set_defaults(func=cmd_notes)
+
+    aa = sub.add_parser("autoapply", help="auto-prepare (tailor) clean-match postings; hold ones with gaps")
+    aa.add_argument("--scope", choices=["seattle", "all", "reviewing"], default=None)
+    aa.add_argument("--min-fit", type=int, default=None, dest="min_fit")
+    aa.add_argument("--limit", type=int, default=None)
+    aa.add_argument("--no-llm", action="store_true")
+    aa.set_defaults(func=cmd_autoapply)
 
     sub.add_parser("gaps", help="cross-posting gap rollup").set_defaults(func=cmd_gaps)
 

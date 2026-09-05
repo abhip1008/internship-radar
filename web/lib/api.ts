@@ -81,6 +81,30 @@ export async function saveUserNotes(id: string, text: string): Promise<boolean> 
   return r.ok;
 }
 
+export interface AutoApplyResult {
+  scope: string;
+  min_fit: number;
+  considered: number;
+  ready: number;
+  needs_improvement: number;
+  results: { id: string; company: string; title: string; state: string; gaps: string[] }[];
+}
+
+export async function autoApply(opts?: {
+  scope?: string;
+  min_fit?: number;
+  limit?: number;
+}): Promise<AutoApplyResult | null> {
+  if (!(await isLive())) return null;
+  const r = await fetch(`/api/autoapply`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(opts ?? {}),
+  });
+  if (!r.ok) return null;
+  return r.json();
+}
+
 export async function addManual(payload: {
   url: string;
   company?: string;

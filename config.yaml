@@ -15,6 +15,13 @@ profile:
   #   all     -> no geo filtering (spec default)
   geo_scope: us
 
+autoapply:
+  # Auto-PREPARE (never auto-submit). Auto-tailors clean-match postings; holds
+  # anything with a real skill gap in a 'needs_improvement' state instead.
+  scope: seattle          # seattle | all | reviewing
+  min_fit: 60             # only auto-prepare postings at/above this fit
+  limit: 25               # max postings per run (caps LLM calls)
+
 scoring:
   # Component weights must sum to 100. See radar/score.py.
   weights:

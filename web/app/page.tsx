@@ -3,12 +3,12 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import type { Posting, Snapshot, Status } from "@/lib/types";
-import { getSnapshot, setStatus } from "@/lib/api";
+import { getSnapshot, setStatus, autoApply } from "@/lib/api";
 import { relTime, runway } from "@/lib/format";
 import Drawer from "./Drawer";
 import ThemeToggle from "./ThemeToggle";
 
-type TabKey = "all" | "seattle" | "new" | "closing" | "applied";
+type TabKey = "all" | "seattle" | "new" | "closing" | "ready" | "applied";
 
 export default function Home() {
   const [snap, setSnap] = useState<Snapshot | null>(null);
@@ -17,6 +17,8 @@ export default function Home() {
   const [openId, setOpenId] = useState<string | null>(null);
   const [cursor, setCursor] = useState(0);
   const [showClosed, setShowClosed] = useState(false);
+  const [prepping, setPrepping] = useState(false);
+  const [prepMsg, setPrepMsg] = useState<string | null>(null);
   const searchRef = useRef<HTMLInputElement>(null);
 
   const load = useCallback(async () => {
@@ -38,6 +40,7 @@ export default function Home() {
       list = list.filter(
         (p) => p.closes_kind === "rolling" || (p.days_remaining !== null && p.days_remaining <= 7)
       );
+    if (tab === "ready") list = list.filter((p) => p.prep_state === "ready");
     if (tab === "applied") list = list.filter((p) => p.status === "applied");
     if (q.trim()) {
       const needle = q.toLowerCase();
@@ -61,9 +64,25 @@ export default function Home() {
       closing: all.filter(
         (p) => p.closes_kind === "rolling" || (p.days_remaining !== null && p.days_remaining <= 7)
       ).length,
+      ready: all.filter((p) => p.prep_state === "ready").length,
       applied: all.filter((p) => p.status === "applied").length,
     };
   }, [snap]);
+
+  const runAutoApply = async () => {
+    setPrepping(true);
+    setPrepMsg(null);
+    const res = await autoApply();
+    if (!res) {
+      setPrepMsg("Auto-prepare needs the live API (run `make serve`).");
+    } else {
+      setPrepMsg(
+        `Auto-prepared ${res.ready} clean match${res.ready === 1 ? "" : "es"} · held ${res.needs_improvement} with gaps (of ${res.considered} considered).`
+      );
+      await load();
+    }
+    setPrepping(false);
+  };
 
   // Keyboard nav (§13): j/k move, Enter opens, a=applied, x=skip, / focuses search.
   useEffect(() => {
@@ -136,8 +155,12 @@ export default function Home() {
             label="Closing soon"
             count={counts.closing}
           />
+          <Tab k="ready" tab={tab} setTab={setTab} label="Ready" count={counts.ready} />
           <Tab k="applied" tab={tab} setTab={setTab} label="Applied" count={counts.applied} />
           <span className="spacer" />
+          <button className="tab" onClick={runAutoApply} disabled={prepping} title="Auto-tailor resumes for clean-match Seattle postings; hold ones with skill gaps">
+            {prepping ? "Preparing…" : "⚡ Auto-prepare"}
+          </button>
           <button className="tab" onClick={() => setShowClosed((v) => !v)}>
             {showClosed ? "Hide closed" : "Show closed"}
           </button>
@@ -145,6 +168,11 @@ export default function Home() {
             ↻ Refresh
           </button>
         </div>
+        {prepMsg && (
+          <div className="muted" style={{ marginTop: 8, fontSize: 12 }}>
+            {prepMsg}
+          </div>
+        )}
       </div>
 
       {rows.length === 0 ? (
@@ -251,7 +279,15 @@ function Row({
         </div>
       </td>
       <td className="resume-links" onClick={(e) => e.stopPropagation()}>
-        {p.resume_tex ? (
+        {p.prep_state === "ready" ? (
+          <span className="prep ready" title="Auto-prepared — resume tailored, ready to submit">
+            ✓ Ready
+          </span>
+        ) : p.prep_state === "needs_improvement" ? (
+          <span className="prep gaps" title="Held by auto-prepare — has skill gaps to address">
+            ⚠ Gaps
+          </span>
+        ) : p.resume_tex ? (
           <>
             {p.resume_pdf && <span>PDF</span>}
             <span className="muted">TEX</span>

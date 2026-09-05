@@ -240,6 +240,16 @@ td {
   display: block;
   font-size: 12px;
 }
+.prep {
+  font-size: 12px;
+  font-weight: 500;
+}
+.prep.ready {
+  color: var(--ok);
+}
+.prep.gaps {
+  color: var(--urgent-1);
+}
 .gen-btn,
 .btn {
   font-family: inherit;

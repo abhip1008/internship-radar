@@ -31,6 +31,10 @@ aggregators that scrape them.
   single experience bank — never invented — rendered to `.tex`/`.pdf`. A
   hallucination check fails the build if any new company, tech, or number
   appears.
+- **Auto-prepare** (`radar autoapply`). Batch-tailors résumés for strong Seattle
+  matches so they're one click from submitting — but *holds* any posting with a
+  real skill gap in a `needs_improvement` state instead of auto-tailoring it, so
+  you address the gap (or apply deliberately) first. It never auto-submits.
 - **Actionable notes per posting.** The skill gaps in the JD, the highest-ROI
   thing to build to close them, and the one signal that would make *this*
   reviewer stop.
@@ -102,6 +106,7 @@ Optional alerts and LLM tailoring: copy `.env.example` to `.env` and fill in
 | `radar grow` | Resolve the ATS for unresolved companies |
 | `radar tailor <posting_id>` | Generate a tailored résumé |
 | `radar notes <posting_id>` | Generate the notes blocks |
+| `radar autoapply [--scope S] [--min-fit N]` | Auto-prepare clean-match postings; hold ones with gaps |
 | `radar export [path]` | Dump the JSON snapshot for the UI |
 | `radar serve [--port]` | Run the local read/write API |
 

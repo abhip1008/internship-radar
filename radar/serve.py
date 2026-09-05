@@ -119,6 +119,14 @@ class Handler(BaseHTTPRequestHandler):
                     self._generate(db, pid, row)
                 else:
                     self._send(404, {"error": "unknown action"})
+            elif parts == ["api", "autoapply"]:
+                from . import autoapply
+                body = self._body()
+                summary = autoapply.run(
+                    db=db, scope=body.get("scope"), min_fit=body.get("min_fit"),
+                    limit=body.get("limit"), use_llm=True,
+                )
+                self._send(200, summary)
             elif parts == ["api", "add"]:
                 self._add_manual(db, self._body())
             else:

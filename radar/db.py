@@ -61,7 +61,8 @@ CREATE TABLE IF NOT EXISTS applications (
   notes_json TEXT,
   user_notes TEXT,
   referral TEXT,
-  next_action TEXT, next_action_due TEXT
+  next_action TEXT, next_action_due TEXT,
+  prep_state TEXT                 -- auto-prepare: 'ready' | 'needs_improvement' | NULL
 );
 
 CREATE TABLE IF NOT EXISTS keyword_stats (
@@ -90,7 +91,14 @@ class DB:
         self.conn.row_factory = sqlite3.Row
         self.conn.execute("PRAGMA journal_mode=WAL;")
         self.conn.executescript(SCHEMA)
+        self._migrate()
         self.conn.commit()
+
+    def _migrate(self) -> None:
+        """Additive column migrations for DBs created before a column existed."""
+        cols = {r["name"] for r in self.conn.execute("PRAGMA table_info(applications)").fetchall()}
+        if "prep_state" not in cols:
+            self.conn.execute("ALTER TABLE applications ADD COLUMN prep_state TEXT")
 
     def close(self) -> None:
         self.conn.close()
@@ -262,6 +270,12 @@ class DB:
     def set_notes(self, pid: str, notes: dict[str, Any]) -> None:
         self.conn.execute(
             "UPDATE applications SET notes_json=? WHERE posting_id=?", (_dumps(notes), pid)
+        )
+        self.conn.commit()
+
+    def set_prep_state(self, pid: str, state: Optional[str]) -> None:
+        self.conn.execute(
+            "UPDATE applications SET prep_state=? WHERE posting_id=?", (state, pid)
         )
         self.conn.commit()
 
